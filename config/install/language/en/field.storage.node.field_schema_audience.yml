@@ -1,0 +1,18 @@
+settings:
+  allowed_values:
+    -
+      label: 'Families with children'
+    -
+      label: 'Couples'
+    -
+      label: 'Adults only'
+    -
+      label: 'Solo travellers'
+    -
+      label: 'Seniors'
+    -
+      label: 'Groups of friends'
+    -
+      label: 'Business travellers'
+    -
+      label: 'Travellers with dogs'

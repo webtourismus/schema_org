@@ -1,0 +1,47 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - schema_org
+  module:
+    - node
+    - options
+id: node.field_schema_audience
+field_name: field_schema_audience
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: families
+      label: 'Familien mit Kindern'
+    -
+      value: couples
+      label: 'Paare'
+    -
+      value: adults_only
+      label: 'Nur Erwachsene'
+    -
+      value: singles
+      label: 'Alleinreisende'
+    -
+      value: seniors
+      label: 'Senioren'
+    -
+      value: friends
+      label: 'Freundesgruppen'
+    -
+      value: business
+      label: 'Geschäftsreisende'
+    -
+      value: pet_owners
+      label: 'Urlaub mit Hund'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

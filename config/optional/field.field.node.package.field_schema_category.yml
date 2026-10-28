@@ -1,0 +1,23 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schema_category
+    - node.type.package
+  enforced:
+    module:
+      - schema_org
+  module:
+    - options
+id: node.package.field_schema_category
+field_name: field_schema_category
+entity_type: node
+bundle: package
+label: 'Kategorie'
+description: 'Themen der Pauschale (schema.org category), mehrere möglich. Einheitliche Liste für alle Websites, unabhängig von der Kategorie für Listen.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

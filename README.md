@@ -27,6 +27,9 @@ ddev drush locale:import de modules/contrib/schema_org/translations/schema_org.d
 ddev drush cex -y
 ```
 
+When updating to a new version, run `ddev drush updb -y` and
+`ddev drush cex -y` afterwards: new fields are added by post updates.
+
 It is installed to `web/modules/contrib/schema_org`.
 
 ## Graph
@@ -50,8 +53,10 @@ from `ebr_accommodation` (`ActionableInterface::getActionUrl('book')`).
 
 - Hotel profile: *Configuration › Search and metadata › Schema.org*
   (`/admin/config/search/schema-org`), translatable via config translation.
-- Rooms and packages: tab "Schema.org" in the node edit form (bed, smoking,
-  pets, price unit, validity, additional JSON properties).
+- Rooms and packages: tab "Schema.org" in the node edit form.
+  - Rooms: bed, smoking, pets.
+  - Packages: category, target group, inclusions.
+  - Both: price unit, validity, additional JSON properties.
 - Both have an "additional properties (JSON)" field for anything not covered,
   e.g. `{"award": "…"}`.
 

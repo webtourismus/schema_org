@@ -1,0 +1,21 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schema_inclusions
+    - node.type.package
+  enforced:
+    module:
+      - schema_org
+id: node.package.field_schema_inclusions
+field_name: field_schema_inclusions
+entity_type: node
+bundle: package
+label: 'Inklusivleistungen'
+description: 'Eine Leistung pro Feld, z. B. „6-Tages-Skipass“ oder „1 Massage (50 Min.)“. Die Verpflegung wird automatisch ergänzt.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

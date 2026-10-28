@@ -36,6 +36,12 @@ class SchemaFormDisplay {
     SchemaGraphBuilder::FIELD_BED_COUNT => ['type' => 'number', 'settings' => ['placeholder' => '']],
     SchemaGraphBuilder::FIELD_SMOKING => ['type' => 'options_select'],
     SchemaGraphBuilder::FIELD_PETS => ['type' => 'options_select'],
+    SchemaGraphBuilder::FIELD_CATEGORY => ['type' => 'options_buttons'],
+    SchemaGraphBuilder::FIELD_AUDIENCE => ['type' => 'options_buttons'],
+    SchemaGraphBuilder::FIELD_INCLUSIONS => [
+      'type' => 'string_textfield',
+      'settings' => ['size' => 60, 'placeholder' => ''],
+    ],
     SchemaGraphBuilder::FIELD_PRICE_UNIT => ['type' => 'options_select'],
     SchemaGraphBuilder::FIELD_VALIDITY => ['type' => 'daterange_default'],
     SchemaGraphBuilder::FIELD_JSON => [
@@ -135,6 +141,15 @@ class SchemaFormDisplay {
       usort($groups[static::GROUP]['children'], static fn (string $a, string $b): int => ($order[$a] ?? 99) <=> ($order[$b] ?? 99));
     }
     $display->setThirdPartySetting('field_group', static::GROUP, $groups[static::GROUP]);
+
+    // Field groups render their children by weight. Re-weight all children,
+    // so fields added in later versions are sorted in as well.
+    foreach ($groups[static::GROUP]['children'] as $index => $child) {
+      $component = $display->getComponent($child);
+      if ($component !== NULL) {
+        $display->setComponent($child, ['weight' => 100 + $index] + $component);
+      }
+    }
   }
 
 }

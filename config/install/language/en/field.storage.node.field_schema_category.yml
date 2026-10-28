@@ -1,0 +1,20 @@
+settings:
+  allowed_values:
+    -
+      label: 'Wellness & spa'
+    -
+      label: 'Skiing & winter sports'
+    -
+      label: 'Hiking & mountaineering'
+    -
+      label: 'Cycling & mountain biking'
+    -
+      label: 'Golf'
+    -
+      label: 'Food & wine'
+    -
+      label: 'Culture & events'
+    -
+      label: 'Holidays (Christmas, New Year, Easter)'
+    -
+      label: 'Short break'

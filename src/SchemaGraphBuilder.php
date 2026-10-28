@@ -64,6 +64,9 @@ class SchemaGraphBuilder {
   public const FIELD_PRICE_UNIT = 'field_schema_price_unit';
   public const FIELD_VALIDITY = 'field_schema_validity';
   public const FIELD_JSON = 'field_schema_json';
+  public const FIELD_CATEGORY = 'field_schema_category';
+  public const FIELD_AUDIENCE = 'field_schema_audience';
+  public const FIELD_INCLUSIONS = 'field_schema_inclusions';
 
   /**
    * Field names of the webtourismus starterkit used as data sources.
@@ -158,6 +161,8 @@ class SchemaGraphBuilder {
           'name' => $node->label(),
           'serviceType' => (string) $this->t('Hotel package', [], ['context' => 'schema.org']),
           'provider' => ['@id' => $hotelId],
+          // Offer has no "audience" property, the offered service has.
+          'audience' => $this->buildAudiences($node),
         ]);
         $graph['offer'] = $this->applyJsonOverrides($graph['offer'], $node);
         $page['mainEntity'] = ['@id' => $graph['offer']['@id']];
@@ -475,16 +480,26 @@ class SchemaGraphBuilder {
       ];
     }
 
-    if ($mealplan = $this->getOptionLabel($node, static::FIELD_MEALPLAN)) {
-      $offer['includesObject'] = [
+    $offer['category'] = array_values($this->getOptionLabels($node, static::FIELD_CATEGORY));
+
+    // The meal plan and all inclusions are services included in the offer.
+    $inclusions = [$this->getOptionLabel($node, static::FIELD_MEALPLAN)];
+    if ($node->hasField(static::FIELD_INCLUSIONS)) {
+      foreach ($node->get(static::FIELD_INCLUSIONS) as $item) {
+        $inclusions[] = trim((string) ($item->getValue()['value'] ?? ''));
+      }
+    }
+    $offer['includesObject'] = array_map(
+      static fn (string $name): array => [
         '@type' => 'TypeAndQuantityNode',
         'amountOfThisGood' => 1,
         'typeOfGood' => [
           '@type' => 'Service',
-          'name' => $mealplan,
+          'name' => $name,
         ],
-      ];
-    }
+      ],
+      array_values(array_unique(array_filter($inclusions, static fn (?string $name): bool => (string) $name !== ''))),
+    );
 
     return $offer;
   }
@@ -768,6 +783,30 @@ class SchemaGraphBuilder {
   }
 
   /**
+   * Builds the target groups of an entity as schema.org audiences.
+   *
+   * @return list<array<string, mixed>>
+   *   A list of Audience nodes.
+   */
+  protected function buildAudiences(FieldableEntityInterface $entity): array {
+    $audiences = [];
+    foreach ($this->getOptionLabels($entity, static::FIELD_AUDIENCE) as $value => $label) {
+      $audiences[] = match ($value) {
+        'adults_only' => [
+          '@type' => 'PeopleAudience',
+          'audienceType' => $label,
+          'suggestedMinAge' => 18,
+        ],
+        default => [
+          '@type' => 'Audience',
+          'audienceType' => $label,
+        ],
+      };
+    }
+    return $audiences;
+  }
+
+  /**
    * Gets the human readable label of a list field's value.
    */
   protected function getOptionLabel(FieldableEntityInterface $entity, string $fieldName): ?string {
@@ -775,11 +814,42 @@ class SchemaGraphBuilder {
     if ($value === NULL) {
       return NULL;
     }
-    $options = $entity->get($fieldName)->getFieldDefinition()
+    $options = $this->getOptions($entity, $fieldName);
+    return isset($options[$value]) ? $this->toPlainText((string) $options[$value]) : (string) $value;
+  }
+
+  /**
+   * Gets the human readable labels of a multi-value list field.
+   *
+   * @return array<string, string>
+   *   The labels, keyed by value, in the order entered by the editor.
+   */
+  protected function getOptionLabels(FieldableEntityInterface $entity, string $fieldName): array {
+    if (!$entity->hasField($fieldName)) {
+      return [];
+    }
+    $options = $this->getOptions($entity, $fieldName);
+    $labels = [];
+    foreach ($entity->get($fieldName) as $item) {
+      $value = (string) ($item->getValue()['value'] ?? '');
+      if ($value !== '') {
+        $labels[$value] = isset($options[$value]) ? $this->toPlainText((string) $options[$value]) : $value;
+      }
+    }
+    return $labels;
+  }
+
+  /**
+   * Gets the allowed values of a list field, translated to the UI language.
+   *
+   * @return array<int|string, mixed>
+   *   The option labels, keyed by value.
+   */
+  protected function getOptions(FieldableEntityInterface $entity, string $fieldName): array {
+    return $entity->get($fieldName)->getFieldDefinition()
       ->getFieldStorageDefinition()
       ->getOptionsProvider('value', $entity)
       ?->getPossibleOptions() ?? [];
-    return isset($options[$value]) ? $this->toPlainText((string) $options[$value]) : (string) $value;
   }
 
   /**
