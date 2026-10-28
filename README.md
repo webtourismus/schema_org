@@ -23,7 +23,7 @@ Then require and enable it:
 ```bash
 ddev composer require webtourismus/schema_org
 ddev drush en schema_org -y
-ddev drush locale:check && ddev drush locale:update
+ddev drush locale:import de modules/contrib/schema_org/translations/schema_org.de.po
 ddev drush cex -y
 ```
 

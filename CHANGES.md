@@ -1,5 +1,11 @@
 # Changes
 
+## 1.0.1
+
+- README: import only the module's German translation file. `drush
+  locale:update` imports translations of all projects and can change
+  translated configuration of other modules.
+
 ## 1.0.0
 
 - Initial release, extracted from the factory.webtourismus.at starterkit.

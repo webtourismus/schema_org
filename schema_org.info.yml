@@ -3,7 +3,7 @@ type: module
 description: 'Server-rendered schema.org structured data (JSON-LD) for Webtourismus Drupal projects: hotel profile, website, pages, breadcrumbs, rooms and offers.'
 package: Webtourismus
 core_version_requirement: ^11.1
-version: 1.0.0
+version: 1.0.1
 'interface translation project': schema_org
 'interface translation server pattern': modules/contrib/schema_org/translations/schema_org.%language.po
 configure: schema_org.settings
