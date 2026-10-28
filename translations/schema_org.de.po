@@ -68,20 +68,20 @@ msgstr "Anderer Beherbergungsbetrieb"
 msgid "Name"
 msgstr "Name"
 
-msgid "Leave empty to use the site name."
-msgstr "Leer lassen, um den Namen der Website zu verwenden."
+msgid "Leave empty to use the site name. Translatable in the \"Translate schema.org\" tab."
+msgstr "Leer lassen, um den Namen der Website zu verwenden. Übersetzbar im Reiter „schema.org übersetzen“."
 
 msgid "Alternate name"
 msgstr "Alternativer Name"
 
-msgid "For example a short name or a former name of the hotel."
-msgstr "Zum Beispiel ein Kurzname oder ein früherer Name des Hotels."
+msgid "For example a short name or a former name of the hotel. Translatable in the \"Translate schema.org\" tab."
+msgstr "Zum Beispiel ein Kurzname oder ein früherer Name des Hotels. Übersetzbar im Reiter „schema.org übersetzen“."
 
 msgid "Description"
 msgstr "Beschreibung"
 
-msgid "Two or three factual sentences about the hotel: location, style, target group and highlights. Translatable."
-msgstr "Zwei bis drei sachliche Sätze über das Hotel: Lage, Stil, Zielgruppe und Highlights. Übersetzbar."
+msgid "Two or three factual sentences about the hotel: location, style, target group and highlights. Translatable in the \"Translate schema.org\" tab."
+msgstr "Zwei bis drei sachliche Sätze über das Hotel: Lage, Stil, Zielgruppe und Highlights. Übersetzbar im Reiter „schema.org übersetzen“."
 
 msgid "Logo"
 msgstr "Logo"
@@ -125,11 +125,14 @@ msgstr "Postleitzahl"
 msgid "Locality"
 msgstr "Ort"
 
+msgid "Translatable in the \"Translate schema.org\" tab, for example Wien and Vienna."
+msgstr "Übersetzbar im Reiter „schema.org übersetzen“, zum Beispiel Wien und Vienna."
+
 msgid "Region"
 msgstr "Region"
 
-msgid "For example the federal state, like Tirol."
-msgstr "Zum Beispiel das Bundesland, wie Tirol."
+msgid "For example the federal state, like Tirol. Translatable in the \"Translate schema.org\" tab."
+msgstr "Zum Beispiel das Bundesland, wie Tirol. Übersetzbar im Reiter „schema.org übersetzen“."
 
 msgid "Country"
 msgstr "Land"
@@ -189,8 +192,8 @@ msgstr "Standard für alle Zimmer. Kann pro Zimmer überschrieben werden."
 msgid "Price range"
 msgstr "Preisspanne"
 
-msgid "For example \"€€€\" or \"€120–350 per night\". Translatable."
-msgstr "Zum Beispiel „€€€“ oder „€ 120–350 pro Nacht“. Übersetzbar."
+msgid "For example \"€€€\" or \"€120–350 per night\". Translatable in the \"Translate schema.org\" tab."
+msgstr "Zum Beispiel „€€€“ oder „€ 120–350 pro Nacht“. Übersetzbar im Reiter „schema.org übersetzen“."
 
 msgid "Currency"
 msgstr "Währung"
@@ -201,8 +204,8 @@ msgstr "ISO-4217-Code der Preise von Zimmern und Angeboten."
 msgid "Payment accepted"
 msgstr "Akzeptierte Zahlungsarten"
 
-msgid "For example \"Cash, Credit Card, Debit Card, Bank transfer\". Translatable."
-msgstr "Zum Beispiel „Bargeld, Kreditkarte, Bankomatkarte, Überweisung“. Übersetzbar."
+msgid "For example \"Cash, Credit Card, Debit Card, Bank transfer\". Translatable in the \"Translate schema.org\" tab."
+msgstr "Zum Beispiel „Bargeld, Kreditkarte, Bankomatkarte, Überweisung“. Übersetzbar im Reiter „schema.org übersetzen“."
 
 msgid "Languages spoken"
 msgstr "Gesprochene Sprachen"
@@ -231,6 +234,9 @@ msgstr "Buchungs-URL"
 msgid "Entry page of the booking engine, published as reservation action of the hotel. Rooms and packages use their own booking deeplinks."
 msgstr "Einstiegsseite der Buchungsmaschine, wird als Reservierungs-Aktion des Hotels veröffentlicht. Zimmer und Angebote verwenden ihre eigenen Buchungs-Deeplinks."
 
+msgid "Settings"
+msgstr "Einstellungen"
+
 msgid "Advanced"
 msgstr "Erweitert"
 
@@ -249,8 +255,8 @@ msgstr "Ausgabe als Offer, zum Beispiel Pauschalen."
 msgid "Additional properties of the hotel (JSON)"
 msgstr "Zusätzliche Eigenschaften des Hotels (JSON)"
 
-msgid "A JSON object with schema.org properties that are added to the hotel and override generated values, for example <code>{\"award\": \"Falstaff 2027\", \"openingHoursSpecification\": {…}}</code>. Translatable."
-msgstr "Ein JSON-Objekt mit schema.org-Eigenschaften, die dem Hotel hinzugefügt werden und generierte Werte überschreiben, zum Beispiel <code>{\"award\": \"Falstaff 2027\", \"openingHoursSpecification\": {…}}</code>. Übersetzbar."
+msgid "A JSON object with schema.org properties that are added to the hotel and override generated values, for example <code>{\"award\": \"Falstaff 2027\", \"openingHoursSpecification\": {…}}</code>. Applies to all languages."
+msgstr "Ein JSON-Objekt mit schema.org-Eigenschaften, die dem Hotel hinzugefügt werden und generierte Werte überschreiben, zum Beispiel <code>{\"award\": \"Falstaff 2027\", \"openingHoursSpecification\": {…}}</code>. Gilt für alle Sprachen."
 
 msgctxt "schema.org"
 msgid "Hotel package"

@@ -1,5 +1,12 @@
 # Changes
 
+## 1.1.1
+
+- Settings page has a "Settings" tab, so config translation adds its
+  "Translate schema.org" tab. Before, the translation page was not linked.
+- Descriptions of translatable settings name that tab. The additional
+  properties (JSON) are not translatable and now say so.
+
 ## 1.1.0
 
 - New package fields in the "Schema.org" tab:

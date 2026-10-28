@@ -97,19 +97,19 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
     $form['general']['name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Name'),
-      '#description' => $this->t('Leave empty to use the site name.'),
+      '#description' => $this->t('Leave empty to use the site name. Translatable in the "Translate schema.org" tab.'),
       '#config_target' => $target . 'name',
     ];
     $form['general']['alternate_name'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Alternate name'),
-      '#description' => $this->t('For example a short name or a former name of the hotel.'),
+      '#description' => $this->t('For example a short name or a former name of the hotel. Translatable in the "Translate schema.org" tab.'),
       '#config_target' => $target . 'alternate_name',
     ];
     $form['general']['description'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Description'),
-      '#description' => $this->t('Two or three factual sentences about the hotel: location, style, target group and highlights. Translatable.'),
+      '#description' => $this->t('Two or three factual sentences about the hotel: location, style, target group and highlights. Translatable in the "Translate schema.org" tab.'),
       '#rows' => 3,
       '#config_target' => $target . 'description',
     ];
@@ -169,12 +169,13 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
     $form['contact']['locality'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Locality'),
+      '#description' => $this->t('Translatable in the "Translate schema.org" tab, for example Wien and Vienna.'),
       '#config_target' => $target . 'address.locality',
     ];
     $form['contact']['region'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Region'),
-      '#description' => $this->t('For example the federal state, like Tirol.'),
+      '#description' => $this->t('For example the federal state, like Tirol. Translatable in the "Translate schema.org" tab.'),
       '#config_target' => $target . 'address.region',
     ];
     $form['contact']['country_code'] = [
@@ -254,7 +255,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
     $form['stay']['price_range'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Price range'),
-      '#description' => $this->t('For example "€€€" or "€120–350 per night". Translatable.'),
+      '#description' => $this->t('For example "€€€" or "€120–350 per night". Translatable in the "Translate schema.org" tab.'),
       '#config_target' => $target . 'price_range',
     ];
     $form['stay']['currency'] = [
@@ -269,7 +270,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
     $form['stay']['payment_accepted'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Payment accepted'),
-      '#description' => $this->t('For example "Cash, Credit Card, Debit Card, Bank transfer". Translatable.'),
+      '#description' => $this->t('For example "Cash, Credit Card, Debit Card, Bank transfer". Translatable in the "Translate schema.org" tab.'),
       '#config_target' => $target . 'payment_accepted',
     ];
     $form['stay']['available_languages'] = [
@@ -352,7 +353,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
     $form['advanced']['extra_properties'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Additional properties of the hotel (JSON)'),
-      '#description' => $this->t('A JSON object with schema.org properties that are added to the hotel and override generated values, for example <code>{"award": "Falstaff 2027", "openingHoursSpecification": {…}}</code>. Translatable.'),
+      '#description' => $this->t('A JSON object with schema.org properties that are added to the hotel and override generated values, for example <code>{"award": "Falstaff 2027", "openingHoursSpecification": {…}}</code>. Applies to all languages.'),
       '#rows' => 6,
       '#config_target' => $target . 'extra_properties',
     ];

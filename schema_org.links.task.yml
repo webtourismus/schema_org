@@ -1,0 +1,4 @@
+schema_org.settings:
+  title: 'Settings'
+  route_name: schema_org.settings
+  base_route: schema_org.settings
