@@ -1,0 +1,7 @@
+schema_org.settings:
+  path: '/admin/config/search/schema-org'
+  defaults:
+    _form: '\Drupal\schema_org\Form\SchemaOrgSettingsForm'
+    _title: 'Schema.org'
+  requirements:
+    _permission: 'administer schema_org'

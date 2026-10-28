@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="schema_org">
+  <description>Drupal coding standards for the schema_org module.</description>
+  <file>.</file>
+  <exclude-pattern>vendor/*</exclude-pattern>
+  <arg name="extensions" value="php,module,inc,install,yml,md"/>
+  <arg value="sp"/>
+  <rule ref="Drupal">
+    <!-- Not packaged by drupal.org, the version is maintained in the info file. -->
+    <exclude name="Drupal.InfoFiles.AutoAddedKeys"/>
+  </rule>
+  <rule ref="DrupalPractice"/>
+</ruleset>

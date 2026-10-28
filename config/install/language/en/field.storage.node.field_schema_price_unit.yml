@@ -1,0 +1,10 @@
+settings:
+  allowed_values:
+    -
+      label: 'per night'
+    -
+      label: 'per person per night'
+    -
+      label: 'per stay'
+    -
+      label: 'per person per stay'

@@ -1,0 +1,21 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schema_json
+    - node.type.package
+  enforced:
+    module:
+      - schema_org
+id: node.package.field_schema_json
+field_name: field_schema_json
+entity_type: node
+bundle: package
+label: 'Zusätzliche schema.org-Eigenschaften (JSON)'
+description: 'Nur für Fortgeschrittene: JSON-Objekt mit zusätzlichen schema.org-Eigenschaften. Diese überschreiben gleichnamige generierte Werte, z. B. <code>{"award": "Bestes Familienhotel 2026"}</code>.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

@@ -1,0 +1,200 @@
+schema_org.settings:
+  type: config_object
+  label: 'Schema.org settings'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Output the schema.org graph'
+    business_type:
+      type: string
+      label: 'Lodging business type'
+      constraints:
+        Choice:
+          - LodgingBusiness
+          - Hotel
+          - Resort
+          - BedAndBreakfast
+          - Hostel
+          - Motel
+          - Campground
+          - VacationRental
+    name:
+      type: label
+      label: 'Name'
+    alternate_name:
+      type: label
+      label: 'Alternate name'
+    description:
+      type: text
+      label: 'Description'
+    logo:
+      type: string
+      label: 'Logo path or URL'
+      constraints:
+        Regex:
+          pattern: '/^((https?:\/\/|\/).+)?$/'
+          message: 'The logo must be an absolute URL or a path starting with a slash.'
+    image_uuids:
+      type: sequence
+      label: 'Images (media UUIDs)'
+      sequence:
+        type: uuid
+        label: 'Media UUID'
+    image_style:
+      type: string
+      label: 'Image style'
+    telephone:
+      type: string
+      label: 'Telephone'
+    email:
+      type: email
+      label: 'Email'
+    address:
+      type: mapping
+      label: 'Postal address'
+      mapping:
+        street_address:
+          type: string
+          label: 'Street address'
+        postal_code:
+          type: string
+          label: 'Postal code'
+        locality:
+          type: label
+          label: 'Locality'
+        region:
+          type: label
+          label: 'Region'
+        country_code:
+          type: string
+          label: 'Country code'
+          constraints:
+            Regex:
+              pattern: '/^([A-Z]{2})?$/'
+              message: 'The country must be an ISO 3166-1 alpha-2 code.'
+    latitude:
+      type: string
+      label: 'Latitude'
+      constraints:
+        Regex:
+          pattern: '/^(-?\d{1,2}(\.\d+)?)?$/'
+          message: 'The latitude must be a decimal number, for example 47.2692.'
+    longitude:
+      type: string
+      label: 'Longitude'
+      constraints:
+        Regex:
+          pattern: '/^(-?\d{1,3}(\.\d+)?)?$/'
+          message: 'The longitude must be a decimal number, for example 11.4041.'
+    star_rating:
+      type: string
+      label: 'Official star rating'
+      constraints:
+        Choice:
+          - ''
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+    star_rating_superior:
+      type: boolean
+      label: 'Superior'
+    checkin_time:
+      type: string
+      label: 'Check-in time'
+      constraints:
+        Regex:
+          pattern: '/^(([01]\d|2[0-3]):[0-5]\d)?$/'
+          message: 'Use the 24-hour format HH:MM, for example 15:00.'
+    checkout_time:
+      type: string
+      label: 'Check-out time'
+      constraints:
+        Regex:
+          pattern: '/^(([01]\d|2[0-3]):[0-5]\d)?$/'
+          message: 'Use the 24-hour format HH:MM, for example 10:00.'
+    number_of_rooms:
+      type: integer
+      label: 'Number of rooms'
+      constraints:
+        Range:
+          min: 0
+    pets_allowed:
+      type: string
+      label: 'Pets allowed'
+      constraints:
+        Choice:
+          - ''
+          - 'yes'
+          - 'no'
+          - on_request
+    price_range:
+      type: label
+      label: 'Price range'
+    currency:
+      type: string
+      label: 'Currency'
+      constraints:
+        Regex:
+          pattern: '/^[A-Z]{3}$/'
+          message: 'The currency must be an ISO 4217 code, for example EUR.'
+    payment_accepted:
+      type: label
+      label: 'Payment accepted'
+    available_languages:
+      type: sequence
+      label: 'Languages spoken'
+      sequence:
+        type: string
+        label: 'Language code'
+        constraints:
+          Regex:
+            pattern: '/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/'
+            message: 'Use language codes like "de", "en" or "it".'
+    amenity_uuids:
+      type: sequence
+      label: 'Amenities (taxonomy term UUIDs)'
+      sequence:
+        type: uuid
+        label: 'Term UUID'
+    same_as:
+      type: sequence
+      label: 'Profiles on other websites'
+      sequence:
+        type: string
+        label: 'URL'
+        constraints:
+          Regex:
+            pattern: '/^https?:\/\/\S+$/'
+            message: 'Each line must be an absolute URL starting with https://.'
+    booking_url:
+      type: string
+      label: 'Booking URL'
+      constraints:
+        Regex:
+          pattern: '/^(https?:\/\/\S+)?$/'
+          message: 'The booking URL must be an absolute URL starting with https://.'
+    extra_properties:
+      type: string
+      label: 'Additional properties (JSON)'
+      constraints:
+        SchemaOrgJsonObject: {  }
+    room_bundles:
+      type: sequence
+      label: 'Room content types'
+      sequence:
+        type: string
+        label: 'Content type'
+        constraints:
+          ConfigExists:
+            prefix: node.type.
+    offer_bundles:
+      type: sequence
+      label: 'Offer content types'
+      sequence:
+        type: string
+        label: 'Content type'
+        constraints:
+          ConfigExists:
+            prefix: node.type.

@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+
+  schema_org.graph_builder:
+    class: Drupal\schema_org\SchemaGraphBuilder
+  Drupal\schema_org\SchemaGraphBuilder: '@schema_org.graph_builder'
+
+  schema_org.form_display:
+    class: Drupal\schema_org\SchemaFormDisplay
+  Drupal\schema_org\SchemaFormDisplay: '@schema_org.form_display'

@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the schema_org module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_uninstall().
+ *
+ * The schema fields are removed through their enforced module dependency,
+ * only the "Schema.org" tab of the node edit forms has to be removed.
+ */
+function schema_org_uninstall(bool $is_syncing): void {
+  if ($is_syncing) {
+    return;
+  }
+  \Drupal::service('schema_org.form_display')->removeGroups();
+}

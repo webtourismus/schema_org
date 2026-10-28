@@ -1,0 +1,5 @@
+schema_org.settings:
+  title: 'Schema.org'
+  description: 'Hotel profile, address, classification and amenities for structured data (JSON-LD).'
+  route_name: schema_org.settings
+  parent: system.admin_config_search

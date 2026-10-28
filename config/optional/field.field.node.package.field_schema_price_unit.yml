@@ -1,0 +1,23 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schema_price_unit
+    - node.type.package
+  enforced:
+    module:
+      - schema_org
+  module:
+    - options
+id: node.package.field_schema_price_unit
+field_name: field_schema_price_unit
+entity_type: node
+bundle: package
+label: 'Preis-Einheit'
+description: 'Worauf sich der Preis bezieht. Wird in den strukturierten Daten (schema.org Offer) ausgegeben.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

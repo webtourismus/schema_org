@@ -1,0 +1,16 @@
+settings:
+  allowed_values:
+    -
+      label: 'Single bed'
+    -
+      label: 'Double bed'
+    -
+      label: 'Two single beds'
+    -
+      label: 'Queen-size bed'
+    -
+      label: 'King-size bed'
+    -
+      label: 'Sofa bed'
+    -
+      label: 'Bunk bed'

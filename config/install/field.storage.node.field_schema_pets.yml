@@ -1,0 +1,32 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - schema_org
+  module:
+    - options
+    - node
+id: node.field_schema_pets
+field_name: field_schema_pets
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'yes'
+      label: Ja
+    -
+      value: 'no'
+      label: Nein
+    -
+      value: on_request
+      label: 'Auf Anfrage'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

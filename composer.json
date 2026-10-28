@@ -1,0 +1,19 @@
+{
+  "name": "webtourismus/schema_org",
+  "description": "Server-rendered schema.org structured data (JSON-LD) for Webtourismus Drupal projects: hotel profile, website, pages, breadcrumbs, rooms and offers.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "keywords": ["Drupal", "schema.org", "JSON-LD", "structured data", "hotel"],
+  "homepage": "https://github.com/webtourismus/schema_org",
+  "support": {
+    "source": "https://github.com/webtourismus/schema_org"
+  },
+  "require": {
+    "php": ">=8.3",
+    "drupal/core": "^11.1"
+  },
+  "suggest": {
+    "drupal/field_group": "Places the schema fields in a \"Schema.org\" tab of the node edit form.",
+    "webtourismus/ebr": "Provides booking deeplinks (seekda, DIRS21, ...) used as Offer URLs."
+  }
+}

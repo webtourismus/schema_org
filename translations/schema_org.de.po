@@ -1,0 +1,290 @@
+# German translation of schema_org.
+msgid ""
+msgstr ""
+"Project-Id-Version: schema_org\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Server-rendered schema.org structured data (JSON-LD) for Webtourismus Drupal projects: hotel profile, website, pages, breadcrumbs, rooms and offers."
+msgstr "Serverseitig gerenderte schema.org-Strukturdaten (JSON-LD) für Webtourismus-Drupal-Projekte: Hotelprofil, Website, Seiten, Breadcrumbs, Zimmer und Angebote."
+
+msgid "Schema.org"
+msgstr "Schema.org"
+
+msgid "Hotel profile, address, classification and amenities for structured data (JSON-LD)."
+msgstr "Hotelprofil, Adresse, Klassifizierung und Ausstattung für strukturierte Daten (JSON-LD)."
+
+msgid "Administer schema.org settings"
+msgstr "schema.org-Einstellungen verwalten"
+
+msgid "Edit the hotel profile used for the schema.org JSON-LD graph."
+msgstr "Das Hotelprofil für den schema.org JSON-LD-Graphen bearbeiten."
+
+msgid "These details describe the hotel in the schema.org JSON-LD graph that is rendered into every frontend page. Search engines and AI assistants use it to understand the hotel, its rooms and its offers. Rooms and packages have an additional \"Schema.org\" tab for data not covered by the regular fields."
+msgstr "Diese Angaben beschreiben das Hotel im schema.org JSON-LD-Graphen, der in jede Seite der Website eingebunden wird. Suchmaschinen und KI-Assistenten verstehen damit das Hotel, seine Zimmer und Angebote. Zimmer und Angebote haben zusätzlich einen Reiter „Schema.org“ für Daten, die von den normalen Feldern nicht abgedeckt werden."
+
+msgid "Check the output with the <a href=\":validator\">Schema.org validator</a> or the <a href=\":rich\">Google Rich Results Test</a>."
+msgstr "Prüfen Sie die Ausgabe mit dem <a href=\":validator\">Schema.org-Validator</a> oder dem <a href=\":rich\">Google Test für Rich-Suchergebnisse</a>."
+
+msgid "Additional data for search engines and AI assistants (schema.org). Not visible on the website."
+msgstr "Zusätzliche Daten für Suchmaschinen und KI-Assistenten (schema.org). Nicht auf der Website sichtbar."
+
+msgid "Output the schema.org graph on frontend pages"
+msgstr "schema.org-Graph auf den Seiten der Website ausgeben"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Type of business"
+msgstr "Art des Betriebs"
+
+msgid "Hotel"
+msgstr "Hotel"
+
+msgid "Resort"
+msgstr "Resort"
+
+msgid "Bed and breakfast / guesthouse"
+msgstr "Frühstückspension / Gästehaus"
+
+msgid "Hostel"
+msgstr "Hostel"
+
+msgid "Motel"
+msgstr "Motel"
+
+msgid "Campground"
+msgstr "Campingplatz"
+
+msgid "Vacation rental / apartments"
+msgstr "Ferienwohnung / Appartements"
+
+msgid "Other lodging business"
+msgstr "Anderer Beherbergungsbetrieb"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Leave empty to use the site name."
+msgstr "Leer lassen, um den Namen der Website zu verwenden."
+
+msgid "Alternate name"
+msgstr "Alternativer Name"
+
+msgid "For example a short name or a former name of the hotel."
+msgstr "Zum Beispiel ein Kurzname oder ein früherer Name des Hotels."
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Two or three factual sentences about the hotel: location, style, target group and highlights. Translatable."
+msgstr "Zwei bis drei sachliche Sätze über das Hotel: Lage, Stil, Zielgruppe und Highlights. Übersetzbar."
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "A path like /themes/custom/frontend/logo.svg or an absolute URL. Leave empty to use the logo of the default theme. Prefer a PNG or JPG logo of at least 112×112 pixels."
+msgstr "Ein Pfad wie /themes/custom/frontend/logo.svg oder eine absolute URL. Leer lassen, um das Logo des Standard-Themes zu verwenden. Empfohlen ist ein PNG- oder JPG-Logo mit mindestens 112×112 Pixel."
+
+msgid "Images"
+msgstr "Bilder"
+
+msgid "Representative photos of the hotel, separated by commas. The first image is the most important one."
+msgstr "Repräsentative Fotos des Hotels, durch Kommas getrennt. Das erste Bild ist das wichtigste."
+
+msgid "Image style"
+msgstr "Bildstil"
+
+msgid "- Original image -"
+msgstr "- Originalbild -"
+
+msgid "Used for all images in the graph. Google recommends at least 1200 pixels width in 16:9, 4:3 or 1:1."
+msgstr "Wird für alle Bilder im Graphen verwendet. Google empfiehlt mindestens 1200 Pixel Breite im Format 16:9, 4:3 oder 1:1."
+
+msgid "Contact and location"
+msgstr "Kontakt und Lage"
+
+msgid "Telephone"
+msgstr "Telefon"
+
+msgid "In international format, for example +43 512 123456."
+msgstr "Im internationalen Format, zum Beispiel +43 512 123456."
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Street address"
+msgstr "Straße und Hausnummer"
+
+msgid "Postal code"
+msgstr "Postleitzahl"
+
+msgid "Locality"
+msgstr "Ort"
+
+msgid "Region"
+msgstr "Region"
+
+msgid "For example the federal state, like Tirol."
+msgstr "Zum Beispiel das Bundesland, wie Tirol."
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Latitude"
+msgstr "Breitengrad"
+
+msgid "Longitude"
+msgstr "Längengrad"
+
+msgid "Classification and stay"
+msgstr "Klassifizierung und Aufenthalt"
+
+msgid "Official star rating"
+msgstr "Offizielle Sterne-Klassifizierung"
+
+msgid "- None -"
+msgstr "- Keine -"
+
+msgid "Superior"
+msgstr "Superior"
+
+msgid "Check-in from"
+msgstr "Check-in ab"
+
+msgid "Check-out until"
+msgstr "Check-out bis"
+
+msgid "Number of rooms"
+msgstr "Anzahl Zimmer"
+
+msgid "Use 0 to omit."
+msgstr "0 eingeben, um die Angabe wegzulassen."
+
+msgid "Pets allowed"
+msgstr "Haustiere erlaubt"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "On request"
+msgstr "Auf Anfrage"
+
+msgctxt "schema.org pets"
+msgid "On request"
+msgstr "Auf Anfrage"
+
+msgid "- Not specified -"
+msgstr "- Keine Angabe -"
+
+msgid "Default for all rooms. Can be overridden per room."
+msgstr "Standard für alle Zimmer. Kann pro Zimmer überschrieben werden."
+
+msgid "Price range"
+msgstr "Preisspanne"
+
+msgid "For example \"€€€\" or \"€120–350 per night\". Translatable."
+msgstr "Zum Beispiel „€€€“ oder „€ 120–350 pro Nacht“. Übersetzbar."
+
+msgid "Currency"
+msgstr "Währung"
+
+msgid "ISO 4217 code of the prices of rooms and packages."
+msgstr "ISO-4217-Code der Preise von Zimmern und Angeboten."
+
+msgid "Payment accepted"
+msgstr "Akzeptierte Zahlungsarten"
+
+msgid "For example \"Cash, Credit Card, Debit Card, Bank transfer\". Translatable."
+msgstr "Zum Beispiel „Bargeld, Kreditkarte, Bankomatkarte, Überweisung“. Übersetzbar."
+
+msgid "Languages spoken"
+msgstr "Gesprochene Sprachen"
+
+msgid "Language codes spoken by the staff, one per line, for example \"de\", \"en\", \"it\"."
+msgstr "Sprachcodes der vom Personal gesprochenen Sprachen, eine pro Zeile, zum Beispiel „de“, „en“, „it“."
+
+msgid "Amenities"
+msgstr "Ausstattung"
+
+msgid "Amenities of the whole hotel (e.g. spa, restaurant, parking), separated by commas. Room amenities are taken from each room."
+msgstr "Ausstattung des gesamten Hotels (z. B. Spa, Restaurant, Parkplatz), durch Kommas getrennt. Die Zimmerausstattung wird aus den einzelnen Zimmern übernommen."
+
+msgid "Links"
+msgstr "Links"
+
+msgid "Profiles on other websites"
+msgstr "Profile auf anderen Websites"
+
+msgid "One URL per line: Google Business Profile, Facebook, Instagram, TripAdvisor, Holidaycheck, Wikipedia, tourism board, … These links help search engines and AI assistants to identify the hotel."
+msgstr "Eine URL pro Zeile: Google-Unternehmensprofil, Facebook, Instagram, TripAdvisor, Holidaycheck, Wikipedia, Tourismusverband, … Diese Links helfen Suchmaschinen und KI-Assistenten, das Hotel eindeutig zu identifizieren."
+
+msgid "Booking URL"
+msgstr "Buchungs-URL"
+
+msgid "Entry page of the booking engine, published as reservation action of the hotel. Rooms and packages use their own booking deeplinks."
+msgstr "Einstiegsseite der Buchungsmaschine, wird als Reservierungs-Aktion des Hotels veröffentlicht. Zimmer und Angebote verwenden ihre eigenen Buchungs-Deeplinks."
+
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgid "Content types describing rooms"
+msgstr "Inhaltstypen für Zimmer"
+
+msgid "Output as HotelRoom with an Offer."
+msgstr "Ausgabe als HotelRoom mit Offer."
+
+msgid "Content types describing offers"
+msgstr "Inhaltstypen für Angebote"
+
+msgid "Output as Offer, for example packages."
+msgstr "Ausgabe als Offer, zum Beispiel Pauschalen."
+
+msgid "Additional properties of the hotel (JSON)"
+msgstr "Zusätzliche Eigenschaften des Hotels (JSON)"
+
+msgid "A JSON object with schema.org properties that are added to the hotel and override generated values, for example <code>{\"award\": \"Falstaff 2027\", \"openingHoursSpecification\": {…}}</code>. Translatable."
+msgstr "Ein JSON-Objekt mit schema.org-Eigenschaften, die dem Hotel hinzugefügt werden und generierte Werte überschreiben, zum Beispiel <code>{\"award\": \"Falstaff 2027\", \"openingHoursSpecification\": {…}}</code>. Übersetzbar."
+
+msgctxt "schema.org"
+msgid "Hotel package"
+msgstr "Pauschale"
+
+msgid "The value must be a JSON object, for example {\"award\": \"Best family hotel 2026\"}. Error: @error"
+msgstr "Der Wert muss ein JSON-Objekt sein, zum Beispiel {\"award\": \"Bestes Familienhotel 2026\"}. Fehler: @error"
+
+msgid "The logo must be an absolute URL or a path starting with a slash."
+msgstr "Das Logo muss eine absolute URL oder ein Pfad sein, der mit einem Schrägstrich beginnt."
+
+msgid "The country must be an ISO 3166-1 alpha-2 code."
+msgstr "Das Land muss ein ISO-3166-1-Alpha-2-Code sein."
+
+msgid "The latitude must be a decimal number, for example 47.2692."
+msgstr "Der Breitengrad muss eine Dezimalzahl sein, zum Beispiel 47.2692."
+
+msgid "The longitude must be a decimal number, for example 11.4041."
+msgstr "Der Längengrad muss eine Dezimalzahl sein, zum Beispiel 11.4041."
+
+msgid "Use the 24-hour format HH:MM, for example 15:00."
+msgstr "Verwenden Sie das 24-Stunden-Format HH:MM, zum Beispiel 15:00."
+
+msgid "Use the 24-hour format HH:MM, for example 10:00."
+msgstr "Verwenden Sie das 24-Stunden-Format HH:MM, zum Beispiel 10:00."
+
+msgid "The currency must be an ISO 4217 code, for example EUR."
+msgstr "Die Währung muss ein ISO-4217-Code sein, zum Beispiel EUR."
+
+msgid "Use language codes like \"de\", \"en\" or \"it\"."
+msgstr "Verwenden Sie Sprachcodes wie „de“, „en“ oder „it“."
+
+msgid "Each line must be an absolute URL starting with https://."
+msgstr "Jede Zeile muss eine absolute URL sein, die mit https:// beginnt."
+
+msgid "The booking URL must be an absolute URL starting with https://."
+msgstr "Die Buchungs-URL muss eine absolute URL sein, die mit https:// beginnt."

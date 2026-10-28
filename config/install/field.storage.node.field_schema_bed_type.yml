@@ -1,0 +1,44 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - schema_org
+  module:
+    - options
+    - node
+id: node.field_schema_bed_type
+field_name: field_schema_bed_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: single
+      label: Einzelbett
+    -
+      value: double
+      label: Doppelbett
+    -
+      value: twin
+      label: 'Zwei Einzelbetten'
+    -
+      value: queen
+      label: Queen-Size-Bett
+    -
+      value: king
+      label: King-Size-Bett
+    -
+      value: sofa_bed
+      label: Schlafcouch
+    -
+      value: bunk_bed
+      label: Stockbett
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

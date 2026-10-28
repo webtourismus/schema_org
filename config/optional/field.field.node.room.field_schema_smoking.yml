@@ -1,0 +1,23 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schema_smoking
+    - node.type.room
+  enforced:
+    module:
+      - schema_org
+  module:
+    - options
+id: node.room.field_schema_smoking
+field_name: field_schema_smoking
+entity_type: node
+bundle: room
+label: 'Rauchen erlaubt'
+description: 'Leer lassen, wenn nicht angegeben werden soll.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

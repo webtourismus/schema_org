@@ -1,0 +1,4 @@
+# Keep development files out of composer dist archives.
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/phpcs.xml.dist export-ignore

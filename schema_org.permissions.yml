@@ -1,0 +1,4 @@
+administer schema_org:
+  title: 'Administer schema.org settings'
+  description: 'Edit the hotel profile used for the schema.org JSON-LD graph.'
+  restrict access: true

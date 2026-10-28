@@ -1,0 +1,37 @@
+langcode: de
+enabled: true
+business_type: Hotel
+name: ''
+alternate_name: ''
+description: ''
+logo: ''
+image_uuids: {  }
+image_style: ''
+telephone: ''
+email: ''
+address:
+  street_address: ''
+  postal_code: ''
+  locality: ''
+  region: ''
+  country_code: AT
+latitude: ''
+longitude: ''
+star_rating: ''
+star_rating_superior: false
+checkin_time: ''
+checkout_time: ''
+number_of_rooms: 0
+pets_allowed: ''
+price_range: ''
+currency: EUR
+payment_accepted: ''
+available_languages: {  }
+amenity_uuids: {  }
+same_as: {  }
+booking_url: ''
+extra_properties: ''
+room_bundles:
+  - room
+offer_bundles:
+  - package
