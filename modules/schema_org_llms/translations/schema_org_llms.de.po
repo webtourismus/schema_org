@@ -1,0 +1,129 @@
+# German translation of schema_org_llms.
+msgid ""
+msgstr ""
+"Project-Id-Version: schema_org_llms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Schema.org llms.txt"
+msgstr "Schema.org llms.txt"
+
+msgid "Generates /llms.txt for AI assistants from the hotel profile, rooms, packages and hotel areas of the schema.org module."
+msgstr "Erzeugt /llms.txt für KI-Assistenten aus Hotelprofil, Zimmern, Pauschalen und Hotelbereichen des schema.org-Moduls."
+
+msgid "@link is generated automatically from the hotel profile, rooms, packages and hotel areas, so it is always up to date."
+msgstr "@link wird automatisch aus Hotelprofil, Zimmern, Pauschalen und Hotelbereichen erzeugt und ist dadurch immer aktuell."
+
+msgid "Additional information"
+msgstr "Zusätzliche Informationen"
+
+msgid "Optional Markdown text shown below the summary, e.g. arrival, parking or what makes the hotel special. Translatable in the \"Translate schema.org\" tab."
+msgstr "Optionaler Markdown-Text unter der Zusammenfassung, z. B. Anreise, Parken oder was das Hotel besonders macht. Übersetzbar im Reiter „schema.org übersetzen“."
+
+msgid "Hotel"
+msgstr "Hotel"
+
+msgid "Rooms"
+msgstr "Zimmer"
+
+msgid "Packages"
+msgstr "Pauschalen"
+
+msgid "Hotel areas"
+msgstr "Hotelbereiche"
+
+msgid "Further information"
+msgstr "Weitere Informationen"
+
+msgid "Other languages"
+msgstr "Andere Sprachen"
+
+msgid "Classification: @stars stars@superior"
+msgstr "Klassifizierung: @stars Sterne@superior"
+
+msgid "superior"
+msgstr "Superior"
+
+msgid "Address: @address"
+msgstr "Adresse: @address"
+
+msgid "Phone: @phone"
+msgstr "Telefon: @phone"
+
+msgid "Email: @email"
+msgstr "E-Mail: @email"
+
+msgid "Check-in from @in, check-out until @out"
+msgstr "Check-in ab @in, Check-out bis @out"
+
+msgid "Number of rooms: @count"
+msgstr "Anzahl Zimmer: @count"
+
+msgid "Pets allowed: @pets"
+msgstr "Haustiere erlaubt: @pets"
+
+msgid "Price range: @range"
+msgstr "Preisspanne: @range"
+
+msgid "Payment accepted: @payment"
+msgstr "Zahlungsarten: @payment"
+
+msgid "Languages spoken: @languages"
+msgstr "Gesprochene Sprachen: @languages"
+
+msgid "Amenities: @amenities"
+msgstr "Ausstattung: @amenities"
+
+msgid "Website"
+msgstr "Website"
+
+msgid "Booking"
+msgstr "Buchung"
+
+msgid "Book"
+msgstr "Buchen"
+
+msgid "Map"
+msgstr "Karte"
+
+msgid "Opening hours: @hours"
+msgstr "Öffnungszeiten: @hours"
+
+msgid "@count persons"
+msgstr "@count Personen"
+
+msgid "@count persons, max. @max"
+msgstr "@count Personen, max. @max"
+
+msgid "@size m²"
+msgstr "@size m²"
+
+msgid "@count × @bed"
+msgstr "@count × @bed"
+
+msgid "from @price @currency @unit"
+msgstr "ab @price @currency @unit"
+
+msgid "valid @from – @through"
+msgstr "gültig @from – @through"
+
+msgid "minimum stay @count nights"
+msgstr "Mindestaufenthalt @count Nächte"
+
+msgid "includes: @items"
+msgstr "inklusive: @items"
+
+msgid "for: @audiences"
+msgstr "für: @audiences"
+
+msgid "category: @categories"
+msgstr "Kategorie: @categories"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"

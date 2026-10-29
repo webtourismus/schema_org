@@ -1,0 +1,7 @@
+schema_org_llms.settings:
+  type: config_object
+  label: 'Schema.org llms.txt settings'
+  mapping:
+    intro:
+      type: text
+      label: 'Additional information'

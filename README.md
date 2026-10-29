@@ -69,6 +69,21 @@ from `ebr_accommodation` (`ActionableInterface::getActionUrl('book')`).
 
 After enabling the module, export the configuration with `drush cex`.
 
+## llms.txt
+
+The submodule "Schema.org llms.txt" (`schema_org_llms`) serves `/llms.txt`
+(https://llmstxt.org) for AI assistants, generated from the same data as the
+JSON-LD, per language (`/llms.txt`, `/en/llms.txt`, ...). An optional
+additional text is configured in the "llms.txt" tab of the settings.
+
+```bash
+ddev drush en schema_org_llms -y
+ddev drush locale:import de modules/contrib/schema_org/modules/schema_org_llms/translations/schema_org_llms.de.po
+```
+
+Delete manually created `web/llms.txt` files: the web server delivers
+existing files directly, so the generated version would never be shown.
+
 ## Extending per project
 
 Implement `hook_schema_org_graph_alter()` in a module or the theme, see

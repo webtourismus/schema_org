@@ -170,43 +170,15 @@ class SchemaGraphBuilder {
     $page = $this->buildWebPage($node, $websiteId, $hotelId, $langcode, $cacheability);
 
     if ($node instanceof NodeInterface) {
-      $nodeUrl = $page['url'];
-      $roomBundles = $config->get('room_bundles') ?? [];
-      $offerBundles = $config->get('offer_bundles') ?? [];
-
-      if (in_array($node->bundle(), $roomBundles, TRUE)) {
-        $graph['room'] = $this->buildRoom($node, $nodeUrl, $hotelId, $config, $cacheability);
-        $page['mainEntity'] = ['@id' => $graph['room']['@id']];
-        $offer = $this->buildOffer($node, $nodeUrl, $hotelId, $config, $cacheability, ['@id' => $graph['room']['@id']]);
-        // A room without price and booking link is no meaningful offer.
-        if (isset($offer['price']) || $offer['url'] !== $nodeUrl) {
-          $graph['offer'] = $offer;
-        }
-        $graph['room'] = $this->applyJsonOverrides($graph['room'], $node);
-      }
-      elseif (in_array($node->bundle(), $offerBundles, TRUE)) {
-        $graph['offer'] = $this->buildOffer($node, $nodeUrl, $hotelId, $config, $cacheability, [
-          '@type' => 'Service',
-          'name' => $node->label(),
-          'serviceType' => (string) $this->t('Hotel package', [], ['context' => 'schema.org']),
-          'provider' => ['@id' => $hotelId],
-          // Offer has no "audience" property, the offered service has.
-          'audience' => $this->buildAudiences($node),
-        ]);
-        $graph['offer'] = $this->applyJsonOverrides($graph['offer'], $node);
-        $page['mainEntity'] = ['@id' => $graph['offer']['@id']];
+      $entities = $this->buildNodeEntities($node, $cacheability);
+      $graph += $entities;
+      $mainEntity = $entities['room'] ?? $entities['offer'] ?? $entities['place'] ?? NULL;
+      if ($mainEntity !== NULL) {
+        $page['mainEntity'] = ['@id' => $mainEntity['@id']];
       }
       elseif ($node->hasField(static::FIELD_PAGE_TYPE)) {
-        $pageType = (string) $this->getScalar($node, static::FIELD_PAGE_TYPE);
-        if (isset(static::PLACE_TYPES[$pageType])) {
-          $graph['place'] = $this->buildPlace($node, $nodeUrl, $hotelId, static::PLACE_TYPES[$pageType], $cacheability);
-          $graph['place'] = $this->applyJsonOverrides($graph['place'], $node);
-          $page['mainEntity'] = ['@id' => $graph['place']['@id']];
-        }
-        else {
-          $page['@type'] = static::PAGE_TYPES[$pageType] ?? 'WebPage';
-          $page = $this->applyJsonOverrides($page, $node);
-        }
+        $page['@type'] = static::PAGE_TYPES[(string) $this->getScalar($node, static::FIELD_PAGE_TYPE)] ?? 'WebPage';
+        $page = $this->applyJsonOverrides($page, $node);
       }
     }
     $cacheability->addCacheContexts(['url.path.is_front']);
@@ -240,6 +212,73 @@ class SchemaGraphBuilder {
       '@context' => 'https://schema.org',
       '@graph' => $graph,
     ];
+  }
+
+  /**
+   * Builds the hotel, independent of the current route.
+   *
+   * @param \Drupal\Core\Cache\CacheableMetadata $cacheability
+   *   Collects the cacheability of everything the result depends on.
+   *
+   * @return array<string, mixed>
+   *   The schema.org LodgingBusiness (or subtype), without empty values.
+   */
+  public function buildHotelNode(CacheableMetadata $cacheability): array {
+    $config = $this->configFactory->get('schema_org.settings');
+    $cacheability->addCacheableDependency($config);
+    return $this->removeEmptyValues($this->buildHotel($config, $this->getBaseUrl() . '#hotel', $cacheability));
+  }
+
+  /**
+   * Builds the schema.org nodes of a room, package or hotel area page.
+   *
+   * @param \Drupal\node\NodeInterface $node
+   *   The node, in the language to build.
+   * @param \Drupal\Core\Cache\CacheableMetadata $cacheability
+   *   Collects the cacheability of everything the result depends on.
+   *
+   * @return array<string, array<string, mixed>>
+   *   Keyed by "room", "offer" or "place", empty for other nodes. Additional
+   *   JSON of the node is applied.
+   */
+  public function buildNodeEntities(NodeInterface $node, CacheableMetadata $cacheability): array {
+    $config = $this->configFactory->get('schema_org.settings');
+    $cacheability->addCacheableDependency($config)->addCacheableDependency($node);
+    $url = $node->toUrl('canonical', ['absolute' => TRUE])->toString(TRUE);
+    $cacheability->addCacheableDependency($url);
+    $nodeUrl = $url->getGeneratedUrl();
+    $hotelId = $this->getBaseUrl() . '#hotel';
+    $entities = [];
+
+    if (in_array($node->bundle(), $config->get('room_bundles') ?? [], TRUE)) {
+      $room = $this->buildRoom($node, $nodeUrl, $hotelId, $config, $cacheability);
+      $offer = $this->buildOffer($node, $nodeUrl, $hotelId, $config, $cacheability, ['@id' => $room['@id']]);
+      $entities['room'] = $this->applyJsonOverrides($room, $node);
+      // A room without price and booking link is no meaningful offer.
+      if (isset($offer['price']) || $offer['url'] !== $nodeUrl) {
+        $entities['offer'] = $offer;
+      }
+    }
+    elseif (in_array($node->bundle(), $config->get('offer_bundles') ?? [], TRUE)) {
+      $offer = $this->buildOffer($node, $nodeUrl, $hotelId, $config, $cacheability, [
+        '@type' => 'Service',
+        'name' => $node->label(),
+        'serviceType' => (string) $this->t('Hotel package', [], ['context' => 'schema.org']),
+        'provider' => ['@id' => $hotelId],
+        // Offer has no "audience" property, the offered service has.
+        'audience' => $this->buildAudiences($node),
+      ]);
+      $entities['offer'] = $this->applyJsonOverrides($offer, $node);
+    }
+    elseif ($node->hasField(static::FIELD_PAGE_TYPE)) {
+      $pageType = (string) $this->getScalar($node, static::FIELD_PAGE_TYPE);
+      if (isset(static::PLACE_TYPES[$pageType])) {
+        $place = $this->buildPlace($node, $nodeUrl, $hotelId, static::PLACE_TYPES[$pageType], $cacheability);
+        $entities['place'] = $this->applyJsonOverrides($place, $node);
+      }
+    }
+
+    return array_map([$this, 'removeEmptyValues'], $entities);
   }
 
   /**

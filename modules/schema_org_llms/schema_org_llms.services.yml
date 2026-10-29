@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    autowire: true
+
+  schema_org_llms.builder:
+    class: Drupal\schema_org_llms\LlmsTxtBuilder
+  Drupal\schema_org_llms\LlmsTxtBuilder: '@schema_org_llms.builder'

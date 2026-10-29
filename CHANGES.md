@@ -1,5 +1,16 @@
 # Changes
 
+## 1.3.0
+
+- New submodule "Schema.org llms.txt" (`schema_org_llms`): generates
+  `/llms.txt` (https://llmstxt.org) for AI assistants from the same data as
+  the JSON-LD: hotel profile, rooms, packages, hotel areas and further pages,
+  per language (e.g. `/en/llms.txt`). Optional additional text in a new
+  "llms.txt" tab, translatable together with the hotel profile.
+- `SchemaGraphBuilder::buildHotelNode()` and `::buildNodeEntities()` expose
+  the hotel and the nodes of rooms, packages and hotel areas independent of
+  the current page.
+
 ## 1.2.0
 
 - "Schema.org" tab for pages with a page type and additional JSON:

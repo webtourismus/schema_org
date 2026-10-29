@@ -1,0 +1,5 @@
+schema_org_llms.settings:
+  title: 'llms.txt'
+  route_name: schema_org_llms.settings
+  base_route: schema_org.settings
+  weight: 10

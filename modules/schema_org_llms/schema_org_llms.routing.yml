@@ -1,0 +1,15 @@
+schema_org_llms.llms_txt:
+  path: '/llms.txt'
+  defaults:
+    _controller: '\Drupal\schema_org_llms\Controller\LlmsTxtController'
+  requirements:
+    # Public by design: llms.txt is meant to be read by AI assistants.
+    _access: 'TRUE'
+
+schema_org_llms.settings:
+  path: '/admin/config/search/schema-org/llms-txt'
+  defaults:
+    _form: '\Drupal\schema_org_llms\Form\LlmsTxtSettingsForm'
+    _title: 'llms.txt'
+  requirements:
+    _permission: 'administer schema_org'
