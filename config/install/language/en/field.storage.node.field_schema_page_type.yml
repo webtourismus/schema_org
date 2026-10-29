@@ -1,0 +1,24 @@
+settings:
+  allowed_values:
+    -
+      label: 'About us'
+    -
+      label: 'Contact / enquiry'
+    -
+      label: 'FAQ'
+    -
+      label: 'Overview / list'
+    -
+      label: 'Gallery'
+    -
+      label: 'Hotel area: restaurant'
+    -
+      label: 'Hotel area: bar'
+    -
+      label: 'Hotel area: café'
+    -
+      label: 'Hotel area: spa / wellness'
+    -
+      label: 'Hotel area: fitness'
+    -
+      label: 'Hotel area: seminar / meeting'

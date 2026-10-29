@@ -1,0 +1,21 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schema_json
+    - node.type.page
+  enforced:
+    module:
+      - schema_org
+id: node.page.field_schema_json
+field_name: field_schema_json
+entity_type: node
+bundle: page
+label: 'Zusätzliche schema.org-Eigenschaften (JSON)'
+description: 'Nur für Fortgeschrittene: JSON-Objekt mit zusätzlichen schema.org-Eigenschaften, z. B. <code>{"openingHours": "Mo-Su 14:00-20:00"}</code>. Bei einem Hotelbereich werden sie dem Bereich hinzugefügt, sonst der Seite. Gleichnamige generierte Werte werden überschrieben.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

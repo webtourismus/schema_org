@@ -11,6 +11,7 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Controller\TitleResolverInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ThemeSettingsProvider;
@@ -67,6 +68,33 @@ class SchemaGraphBuilder {
   public const FIELD_CATEGORY = 'field_schema_category';
   public const FIELD_AUDIENCE = 'field_schema_audience';
   public const FIELD_INCLUSIONS = 'field_schema_inclusions';
+  public const FIELD_PAGE_TYPE = 'field_schema_page_type';
+
+  /**
+   * Page type values describing the page itself, as WebPage subtypes.
+   */
+  public const PAGE_TYPES = [
+    'about' => 'AboutPage',
+    'contact' => 'ContactPage',
+    'faq' => 'FAQPage',
+    'collection' => 'CollectionPage',
+    'gallery' => 'ImageGallery',
+  ];
+
+  /**
+   * Page type values describing a part of the hotel, e.g. the spa.
+   *
+   * The part becomes the page's main entity, is contained in the hotel and
+   * listed in the hotel's "containsPlace".
+   */
+  public const PLACE_TYPES = [
+    'restaurant' => 'Restaurant',
+    'bar' => 'BarOrPub',
+    'cafe' => 'CafeOrCoffeeShop',
+    'spa' => 'DaySpa',
+    'fitness' => 'ExerciseGym',
+    'meeting' => 'EventVenue',
+  ];
 
   /**
    * Field names of the webtourismus starterkit used as data sources.
@@ -102,6 +130,7 @@ class SchemaGraphBuilder {
     protected ModuleHandlerInterface $moduleHandler,
     protected ThemeManagerInterface $themeManager,
     protected ThemeSettingsProvider $themeSettingsProvider,
+    protected EntityFieldManagerInterface $entityFieldManager,
   ) {}
 
   /**
@@ -166,6 +195,18 @@ class SchemaGraphBuilder {
         ]);
         $graph['offer'] = $this->applyJsonOverrides($graph['offer'], $node);
         $page['mainEntity'] = ['@id' => $graph['offer']['@id']];
+      }
+      elseif ($node->hasField(static::FIELD_PAGE_TYPE)) {
+        $pageType = (string) $this->getScalar($node, static::FIELD_PAGE_TYPE);
+        if (isset(static::PLACE_TYPES[$pageType])) {
+          $graph['place'] = $this->buildPlace($node, $nodeUrl, $hotelId, static::PLACE_TYPES[$pageType], $cacheability);
+          $graph['place'] = $this->applyJsonOverrides($graph['place'], $node);
+          $page['mainEntity'] = ['@id' => $graph['place']['@id']];
+        }
+        else {
+          $page['@type'] = static::PAGE_TYPES[$pageType] ?? 'WebPage';
+          $page = $this->applyJsonOverrides($page, $node);
+        }
       }
     }
     $cacheability->addCacheContexts(['url.path.is_front']);
@@ -248,6 +289,7 @@ class SchemaGraphBuilder {
         $cacheability,
       ),
       'sameAs' => $config->get('same_as'),
+      'containsPlace' => $this->getHotelPlaces($cacheability),
     ];
 
     $latitude = (string) $config->get('latitude');
@@ -578,6 +620,59 @@ class SchemaGraphBuilder {
       ];
     }
     return $features;
+  }
+
+  /**
+   * Builds a part of the hotel, e.g. the spa, from a page.
+   *
+   * @return array<string, mixed>
+   *   The schema.org node, e.g. a DaySpa.
+   */
+  protected function buildPlace(NodeInterface $node, string $nodeUrl, string $hotelId, string $type, CacheableMetadata $cacheability): array {
+    return [
+      '@type' => $type,
+      '@id' => $nodeUrl . '#place',
+      'name' => $node->label(),
+      'description' => $this->getNodeDescription($node),
+      'url' => $nodeUrl,
+      'image' => $this->getNodeImageUrls($node, $cacheability),
+      'containedInPlace' => ['@id' => $hotelId],
+    ];
+  }
+
+  /**
+   * Gets references to all published parts of the hotel, e.g. the spa.
+   *
+   * @return list<array<string, string>>
+   *   A list of "@id" references.
+   */
+  protected function getHotelPlaces(CacheableMetadata $cacheability): array {
+    $bundles = $this->entityFieldManager->getFieldMap()['node'][static::FIELD_PAGE_TYPE]['bundles'] ?? [];
+    if ($bundles === []) {
+      return [];
+    }
+    $nodeType = $this->entityTypeManager->getDefinition('node');
+    foreach ($bundles as $bundle) {
+      $cacheability->addCacheTags($nodeType->getBundleListCacheTags($bundle));
+    }
+
+    $storage = $this->entityTypeManager->getStorage('node');
+    // Only published pages are listed, which are public anyway.
+    $ids = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('status', 1)
+      ->condition(static::FIELD_PAGE_TYPE, array_keys(static::PLACE_TYPES), 'IN')
+      ->sort('nid')
+      ->execute();
+
+    $places = [];
+    foreach ($storage->loadMultiple($ids) as $place) {
+      $place = $this->entityRepository->getTranslationFromContext($place);
+      $url = $place->toUrl('canonical', ['absolute' => TRUE])->toString(TRUE);
+      $cacheability->addCacheableDependency($url);
+      $places[] = ['@id' => $url->getGeneratedUrl() . '#place'];
+    }
+    return $places;
   }
 
   /**

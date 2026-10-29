@@ -32,6 +32,7 @@ class SchemaFormDisplay {
    * Widgets of the schema fields, in display order.
    */
   protected const WIDGETS = [
+    SchemaGraphBuilder::FIELD_PAGE_TYPE => ['type' => 'options_select'],
     SchemaGraphBuilder::FIELD_BED_TYPE => ['type' => 'options_select'],
     SchemaGraphBuilder::FIELD_BED_COUNT => ['type' => 'number', 'settings' => ['placeholder' => '']],
     SchemaGraphBuilder::FIELD_SMOKING => ['type' => 'options_select'],

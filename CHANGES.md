@@ -1,5 +1,17 @@
 # Changes
 
+## 1.2.0
+
+- "Schema.org" tab for pages with a page type and additional JSON:
+  - About us, contact, FAQ, overview and gallery pages are output as the
+    matching WebPage type (`AboutPage`, `ContactPage`, ...).
+  - Hotel areas (restaurant, bar, café, spa, fitness, seminar) are output as
+    their own place (`Restaurant`, `DaySpa`, ...), contained in the hotel and
+    the page's main entity. The hotel lists them in `containsPlace`.
+  - The additional JSON is added to the hotel area, otherwise to the page.
+- Post update creates the fields on existing sites: run `drush updb` and
+  `drush cex`.
+
 ## 1.1.1
 
 - Settings page has a "Settings" tab, so config translation adds its

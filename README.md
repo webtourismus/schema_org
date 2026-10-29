@@ -42,8 +42,14 @@ It is installed to `web/modules/contrib/schema_org`.
 | `BreadcrumbList` | `<page url>#breadcrumb`     | Drupal breadcrumb                        |
 | `HotelRoom`      | `<node url>#room`           | Room nodes + "Schema.org" tab            |
 | `Offer`          | `<node url>#offer`          | Room/package price, booking deeplink     |
+| `DaySpa`, ... (*)| `<node url>#place`          | Pages with a hotel area as page type     |
 
-(*) Or another `LodgingBusiness` subtype, e.g. `Resort` or `BedAndBreakfast`.
+(*) The hotel is a `Hotel` or another `LodgingBusiness` subtype, e.g.
+`Resort`. Hotel areas are `Restaurant`, `BarOrPub`, `CafeOrCoffeeShop`,
+`DaySpa`, `ExerciseGym` or `EventVenue`, listed in the hotel's
+`containsPlace`. Other pages are a `WebPage` or the subtype chosen as page
+type (`AboutPage`, `ContactPage`, `FAQPage`, `CollectionPage`,
+`ImageGallery`).
 
 Prices, occupancy, meal plan and minimum stay come from the existing fields
 filled by the booking engine migrations (seekda, ...). Booking deeplinks come
@@ -56,6 +62,7 @@ from `ebr_accommodation` (`ActionableInterface::getActionUrl('book')`).
 - Rooms and packages: tab "Schema.org" in the node edit form.
   - Rooms: bed, smoking, pets.
   - Packages: category, target group, inclusions.
+  - Pages: page type (incl. hotel areas like the spa).
   - Both: price unit, validity, additional JSON properties.
 - Both have an "additional properties (JSON)" field for anything not covered,
   e.g. `{"award": "…"}`.

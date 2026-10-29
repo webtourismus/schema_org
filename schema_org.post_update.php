@@ -30,6 +30,19 @@ function schema_org_post_update_package_category_audience_inclusions(): Translat
 }
 
 /**
+ * Adds the page type and additional JSON fields to pages.
+ */
+function schema_org_post_update_page_type(): TranslatableMarkup {
+  $created = _schema_org_install_fields([
+    SchemaGraphBuilder::FIELD_PAGE_TYPE,
+    SchemaGraphBuilder::FIELD_JSON,
+  ]);
+  return new TranslatableMarkup('Created schema.org fields: @fields.', [
+    '@fields' => $created ? implode(', ', $created) : '-',
+  ]);
+}
+
+/**
  * Creates schema fields from the module's shipped configuration.
  *
  * Field storages are created from config/install (with their translations),

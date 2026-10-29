@@ -1,0 +1,23 @@
+langcode: de
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_schema_page_type
+    - node.type.page
+  enforced:
+    module:
+      - schema_org
+  module:
+    - options
+id: node.page.field_schema_page_type
+field_name: field_schema_page_type
+entity_type: node
+bundle: page
+label: 'Seitentyp'
+description: 'Wofür die Seite steht (schema.org). Bei einem Hotelbereich, z. B. Spa, wird der Bereich als eigener Ort des Hotels beschrieben. Leer lassen für eine normale Seite.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

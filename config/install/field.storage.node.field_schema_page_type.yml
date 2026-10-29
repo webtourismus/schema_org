@@ -1,0 +1,56 @@
+langcode: de
+status: true
+dependencies:
+  enforced:
+    module:
+      - schema_org
+  module:
+    - node
+    - options
+id: node.field_schema_page_type
+field_name: field_schema_page_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: about
+      label: 'Über uns'
+    -
+      value: contact
+      label: 'Kontakt / Anfrage'
+    -
+      value: faq
+      label: 'FAQ'
+    -
+      value: collection
+      label: 'Übersicht / Liste'
+    -
+      value: gallery
+      label: 'Galerie'
+    -
+      value: restaurant
+      label: 'Hotelbereich: Restaurant'
+    -
+      value: bar
+      label: 'Hotelbereich: Bar'
+    -
+      value: cafe
+      label: 'Hotelbereich: Café'
+    -
+      value: spa
+      label: 'Hotelbereich: Spa / Wellness'
+    -
+      value: fitness
+      label: 'Hotelbereich: Fitness'
+    -
+      value: meeting
+      label: 'Hotelbereich: Seminar / Tagung'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
