@@ -26,6 +26,9 @@ msgstr "Optionaler Markdown-Text unter der Zusammenfassung, z. B. Anreise, Parke
 msgid "Hotel"
 msgstr "Hotel"
 
+msgid "About us"
+msgstr "Über uns"
+
 msgid "Rooms"
 msgstr "Zimmer"
 

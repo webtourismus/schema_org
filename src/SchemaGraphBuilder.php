@@ -42,6 +42,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * The graph uses stable "@id" references so search engines and AI crawlers
  * can merge the nodes across pages:
  * - <base>#hotel: the lodging business (from schema_org.settings).
+ * - <base>#organization: instead of the hotel for other business types, e.g.
+ *   an NGO or a restaurant.
  * - <base>#website: the website, published by the hotel.
  * - <page url>: the WebPage, part of the website, about the hotel.
  * - <page url>#breadcrumb: the BreadcrumbList of the page.
@@ -95,6 +97,18 @@ class SchemaGraphBuilder {
     'fitness' => 'ExerciseGym',
     'meeting' => 'EventVenue',
   ];
+
+  /**
+   * Business types that are organizations without a place, e.g. charities.
+   */
+  public const ORGANIZATION_TYPES = ['Organization', 'NGO'];
+
+  /**
+   * Business types that are places but no lodging, e.g. restaurants.
+   *
+   * All other business types are lodging businesses (Hotel, Resort, ...).
+   */
+  public const LOCAL_BUSINESS_TYPES = ['LocalBusiness', 'Restaurant'];
 
   /**
    * Field names of the webtourismus starterkit used as data sources.
@@ -157,7 +171,7 @@ class SchemaGraphBuilder {
     }
 
     $baseUrl = $this->getBaseUrl();
-    $hotelId = $baseUrl . '#hotel';
+    $hotelId = $this->getBusinessId($config);
     $websiteId = $baseUrl . '#website';
     $langcode = $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
 
@@ -215,18 +229,35 @@ class SchemaGraphBuilder {
   }
 
   /**
-   * Builds the hotel, independent of the current route.
+   * Builds the hotel or organization, independent of the current route.
    *
    * @param \Drupal\Core\Cache\CacheableMetadata $cacheability
    *   Collects the cacheability of everything the result depends on.
    *
    * @return array<string, mixed>
-   *   The schema.org LodgingBusiness (or subtype), without empty values.
+   *   The schema.org LodgingBusiness (or subtype), Organization or
+   *   LocalBusiness, without empty values.
    */
   public function buildHotelNode(CacheableMetadata $cacheability): array {
     $config = $this->configFactory->get('schema_org.settings');
     $cacheability->addCacheableDependency($config);
-    return $this->removeEmptyValues($this->buildHotel($config, $this->getBaseUrl() . '#hotel', $cacheability));
+    return $this->removeEmptyValues($this->buildHotel($config, $this->getBusinessId($config), $cacheability));
+  }
+
+  /**
+   * Checks whether the configured business is a lodging business.
+   *
+   * Rooms, packages and hotel areas are only output for lodging businesses.
+   */
+  public function isLodgingBusiness(): bool {
+    return static::isLodgingType((string) $this->configFactory->get('schema_org.settings')->get('business_type'));
+  }
+
+  /**
+   * Checks whether a business type is a lodging business, e.g. a Hotel.
+   */
+  public static function isLodgingType(string $type): bool {
+    return !in_array($type, [...static::ORGANIZATION_TYPES, ...static::LOCAL_BUSINESS_TYPES], TRUE);
   }
 
   /**
@@ -238,12 +269,15 @@ class SchemaGraphBuilder {
    *   Collects the cacheability of everything the result depends on.
    *
    * @return array<string, array<string, mixed>>
-   *   Keyed by "room", "offer" or "place", empty for other nodes. Additional
-   *   JSON of the node is applied.
+   *   Keyed by "room", "offer" or "place", empty for other nodes and for
+   *   businesses other than lodging. Additional JSON of the node is applied.
    */
   public function buildNodeEntities(NodeInterface $node, CacheableMetadata $cacheability): array {
     $config = $this->configFactory->get('schema_org.settings');
     $cacheability->addCacheableDependency($config)->addCacheableDependency($node);
+    if (!static::isLodgingType((string) $config->get('business_type'))) {
+      return [];
+    }
     $url = $node->toUrl('canonical', ['absolute' => TRUE])->toString(TRUE);
     $cacheability->addCacheableDependency($url);
     $nodeUrl = $url->getGeneratedUrl();
@@ -282,18 +316,27 @@ class SchemaGraphBuilder {
   }
 
   /**
-   * Builds the lodging business node.
+   * Builds the lodging business, organization or local business node.
+   *
+   * Properties are limited to those defined for the business type: hotel
+   * facts only for lodging, prices, amenities and coordinates only for
+   * places, not for organizations.
    *
    * @return array<string, mixed>
-   *   The schema.org LodgingBusiness (or subtype) node.
+   *   The schema.org LodgingBusiness (or subtype), Organization or
+   *   LocalBusiness node.
    */
   protected function buildHotel(ImmutableConfig $config, string $hotelId, CacheableMetadata $cacheability): array {
     $siteConfig = $this->configFactory->get('system.site');
     $cacheability->addCacheableDependency($siteConfig);
     $currency = $config->get('currency') ?: 'EUR';
+    $type = $config->get('business_type') ?: 'Hotel';
+    $isLodging = static::isLodgingType($type);
+    $isPlace = !in_array($type, static::ORGANIZATION_TYPES, TRUE);
+    $languages = $config->get('available_languages');
 
     $hotel = [
-      '@type' => $config->get('business_type') ?: 'Hotel',
+      '@type' => $type,
       '@id' => $hotelId,
       'name' => $config->get('name') ?: $siteConfig->get('name'),
       'alternateName' => $config->get('alternate_name'),
@@ -315,25 +358,28 @@ class SchemaGraphBuilder {
         'addressRegion' => $config->get('address.region'),
         'addressCountry' => $config->get('address.country_code'),
       ],
-      'checkinTime' => $config->get('checkin_time'),
-      'checkoutTime' => $config->get('checkout_time'),
-      'numberOfRooms' => (int) $config->get('number_of_rooms') ?: NULL,
-      'petsAllowed' => $this->mapPetsAllowed((string) $config->get('pets_allowed')),
-      'priceRange' => $config->get('price_range'),
-      'currenciesAccepted' => $currency,
-      'paymentAccepted' => $config->get('payment_accepted'),
-      'availableLanguage' => $config->get('available_languages'),
-      'amenityFeature' => $this->buildAmenityFeatures(
+      'checkinTime' => $isLodging ? $config->get('checkin_time') : NULL,
+      'checkoutTime' => $isLodging ? $config->get('checkout_time') : NULL,
+      'numberOfRooms' => $isLodging ? ((int) $config->get('number_of_rooms') ?: NULL) : NULL,
+      'petsAllowed' => $isLodging ? $this->mapPetsAllowed((string) $config->get('pets_allowed')) : NULL,
+      'priceRange' => $isPlace ? $config->get('price_range') : NULL,
+      'currenciesAccepted' => $isPlace ? $currency : NULL,
+      'paymentAccepted' => $isPlace ? $config->get('payment_accepted') : NULL,
+      // Only lodging businesses have "availableLanguage", organizations and
+      // other businesses "knowsLanguage".
+      'availableLanguage' => $isLodging ? $languages : NULL,
+      'knowsLanguage' => $isLodging ? NULL : $languages,
+      'amenityFeature' => $isPlace ? $this->buildAmenityFeatures(
         $this->loadByUuids('taxonomy_term', $config->get('amenity_uuids') ?? []),
         $cacheability,
-      ),
+      ) : NULL,
       'sameAs' => $config->get('same_as'),
-      'containsPlace' => $this->getHotelPlaces($cacheability),
+      'containsPlace' => $isLodging ? $this->getHotelPlaces($cacheability) : NULL,
     ];
 
     $latitude = (string) $config->get('latitude');
     $longitude = (string) $config->get('longitude');
-    if ($latitude !== '' && $longitude !== '') {
+    if ($isPlace && $latitude !== '' && $longitude !== '') {
       $hotel['geo'] = [
         '@type' => 'GeoCoordinates',
         'latitude' => (float) $latitude,
@@ -342,7 +388,7 @@ class SchemaGraphBuilder {
       $hotel['hasMap'] = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($latitude . ',' . $longitude);
     }
 
-    if ($starRating = (string) $config->get('star_rating')) {
+    if ($isLodging && ($starRating = (string) $config->get('star_rating'))) {
       $hotel['starRating'] = [
         '@type' => 'Rating',
         'ratingValue' => $starRating,
@@ -856,6 +902,17 @@ class SchemaGraphBuilder {
     $url = Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString(TRUE);
     $cacheability->addCacheableDependency($url);
     return $url->getGeneratedUrl();
+  }
+
+  /**
+   * Gets the "@id" of the hotel or organization.
+   *
+   * Lodging businesses keep "#hotel", all other business types share
+   * "#organization", so the "@id" is stable when changing between them.
+   */
+  protected function getBusinessId(ImmutableConfig $config): string {
+    $isLodging = static::isLodgingType((string) $config->get('business_type'));
+    return $this->getBaseUrl() . ($isLodging ? '#hotel' : '#organization');
   }
 
   /**

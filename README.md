@@ -37,6 +37,7 @@ It is installed to `web/modules/contrib/schema_org`.
 | Node             | `@id`                       | Source                                   |
 |------------------|-----------------------------|------------------------------------------|
 | `Hotel` (*)      | `<base>/#hotel`             | Settings form                            |
+| `NGO`, ... (**)  | `<base>/#organization`      | Settings form, instead of the hotel      |
 | `WebSite`        | `<base>/#website`           | Site name                                |
 | `WebPage`        | `<page url>`                | Current page / node                      |
 | `BreadcrumbList` | `<page url>#breadcrumb`     | Drupal breadcrumb                        |
@@ -50,6 +51,19 @@ It is installed to `web/modules/contrib/schema_org`.
 `containsPlace`. Other pages are a `WebPage` or the subtype chosen as page
 type (`AboutPage`, `ContactPage`, `FAQPage`, `CollectionPage`,
 `ImageGallery`).
+
+(**) For websites other than accommodation, e.g. charities or small
+businesses, choose another type of business in the settings:
+
+- Organizations (`NGO`, `Organization`): no prices, amenities or
+  coordinates.
+- Local businesses (`Restaurant`, `LocalBusiness`): with prices, amenities
+  and coordinates.
+
+Both get no hotel facts (classification, check-in, rooms, pets), no rooms,
+packages or hotel areas, in the JSON-LD and in llms.txt. Languages are
+output as `knowsLanguage`. Further properties, e.g. `servesCuisine` or
+`openingHoursSpecification`, go into the additional properties (JSON).
 
 Prices, occupancy, meal plan and minimum stay come from the existing fields
 filled by the booking engine migrations (seekda, ...). Booking deeplinks come

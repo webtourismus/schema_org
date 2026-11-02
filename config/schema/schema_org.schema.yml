@@ -7,9 +7,13 @@ schema_org.settings:
       label: 'Output the schema.org graph'
     business_type:
       type: string
-      label: 'Lodging business type'
+      label: 'Business type'
       constraints:
         Choice:
+          - Organization
+          - NGO
+          - LocalBusiness
+          - Restaurant
           - LodgingBusiness
           - Hotel
           - Resort

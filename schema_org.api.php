@@ -19,7 +19,8 @@ declare(strict_types=1);
  * change data without touching the base module.
  *
  * @param array<string, array<string, mixed>> $graph
- *   The graph nodes, keyed by a machine name: "hotel", "website", "webpage",
+ *   The graph nodes, keyed by a machine name: "hotel" (also for other
+ *   business types, with "@id" <base>#organization), "website", "webpage",
  *   and depending on the page "breadcrumb", "room" and "offer". Keys are
  *   dropped when rendering, so new nodes can be added with any key.
  * @param array<string, mixed> $context

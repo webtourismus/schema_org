@@ -65,6 +65,33 @@ msgstr "Ferienwohnung / Appartements"
 msgid "Other lodging business"
 msgstr "Anderer Beherbergungsbetrieb"
 
+msgid "Rooms, packages, hotel areas and the classification are only output for accommodation."
+msgstr "Zimmer, Pauschalen, Hotelbereiche und die Klassifizierung werden nur für Unterkünfte ausgegeben."
+
+msgid "Accommodation"
+msgstr "Unterkunft"
+
+msgid "Other business"
+msgstr "Anderer Betrieb"
+
+msgid "Restaurant"
+msgstr "Restaurant"
+
+msgid "Other local business"
+msgstr "Anderer lokaler Betrieb"
+
+msgid "Organization"
+msgstr "Organisation"
+
+msgid "Non-profit organization / charity"
+msgstr "Gemeinnützige Organisation / Hilfsorganisation"
+
+msgid "Other organization / association"
+msgstr "Andere Organisation / Verein"
+
+msgid "Prices, languages and amenities"
+msgstr "Preise, Sprachen und Ausstattung"
+
 msgid "Name"
 msgstr "Name"
 

@@ -69,26 +69,30 @@ class LlmsTxtBuilder {
       $lines[] = $intro;
     }
 
-    $this->addSection($lines, (string) $this->t('Hotel'), $this->buildHotelFacts($hotel));
-
-    $roomItems = [];
-    foreach ($this->loadNodes($settings->get('room_bundles') ?? [], NULL, $cacheability) as $node) {
-      $roomItems[] = $this->buildRoomItem($node, $cacheability);
-    }
-    $this->addSection($lines, (string) $this->t('Rooms'), $roomItems);
-
-    $packageItems = [];
-    foreach ($this->loadNodes($settings->get('offer_bundles') ?? [], NULL, $cacheability) as $node) {
-      $packageItems[] = $this->buildPackageItem($node, $cacheability);
-    }
-    $this->addSection($lines, (string) $this->t('Packages'), $packageItems);
+    $isLodging = $this->graphBuilder->isLodgingBusiness();
+    $this->addSection($lines, (string) ($isLodging ? $this->t('Hotel') : $this->t('About us')), $this->buildHotelFacts($hotel));
 
     $pageBundles = $this->getPageTypeBundles();
-    $areaItems = [];
-    foreach ($this->loadNodes($pageBundles, array_keys(SchemaGraphBuilder::PLACE_TYPES), $cacheability) as $node) {
-      $areaItems[] = $this->buildAreaItem($node, $cacheability);
+    // Rooms, packages and hotel areas only exist for lodging businesses.
+    if ($isLodging) {
+      $roomItems = [];
+      foreach ($this->loadNodes($settings->get('room_bundles') ?? [], NULL, $cacheability) as $node) {
+        $roomItems[] = $this->buildRoomItem($node, $cacheability);
+      }
+      $this->addSection($lines, (string) $this->t('Rooms'), $roomItems);
+
+      $packageItems = [];
+      foreach ($this->loadNodes($settings->get('offer_bundles') ?? [], NULL, $cacheability) as $node) {
+        $packageItems[] = $this->buildPackageItem($node, $cacheability);
+      }
+      $this->addSection($lines, (string) $this->t('Packages'), $packageItems);
+
+      $areaItems = [];
+      foreach ($this->loadNodes($pageBundles, array_keys(SchemaGraphBuilder::PLACE_TYPES), $cacheability) as $node) {
+        $areaItems[] = $this->buildAreaItem($node, $cacheability);
+      }
+      $this->addSection($lines, (string) $this->t('Hotel areas'), $areaItems);
     }
-    $this->addSection($lines, (string) $this->t('Hotel areas'), $areaItems);
 
     $pageItems = [];
     foreach ($this->loadNodes($pageBundles, array_keys(SchemaGraphBuilder::PAGE_TYPES), $cacheability) as $node) {
@@ -155,8 +159,9 @@ class LlmsTxtBuilder {
     if (!empty($hotel['paymentAccepted'])) {
       $facts[] = $this->t('Payment accepted: @payment', ['@payment' => $hotel['paymentAccepted']]);
     }
-    if (!empty($hotel['availableLanguage'])) {
-      $facts[] = $this->t('Languages spoken: @languages', ['@languages' => implode(', ', $this->languageNames((array) $hotel['availableLanguage']))]);
+    $languages = $hotel['availableLanguage'] ?? $hotel['knowsLanguage'] ?? [];
+    if (!empty($languages)) {
+      $facts[] = $this->t('Languages spoken: @languages', ['@languages' => implode(', ', $this->languageNames((array) $languages))]);
     }
     if (!empty($hotel['amenityFeature'])) {
       $facts[] = $this->t('Amenities: @amenities', ['@amenities' => implode(', ', array_column((array) $hotel['amenityFeature'], 'name'))]);

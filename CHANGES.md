@@ -1,5 +1,21 @@
 # Changes
 
+## 1.4.0
+
+- Business types for websites other than accommodation: `Restaurant`,
+  `LocalBusiness` (other local business), `NGO` (non-profit organization /
+  charity) and `Organization` (other organization / association).
+  - Their `@id` is `<base>/#organization`, lodging businesses keep
+    `<base>/#hotel`.
+  - Only properties of the type are output: no hotel facts (classification,
+    check-in/out, rooms, pets) and no rooms, packages or hotel areas;
+    organizations also without prices, amenities and coordinates. Languages
+    are `knowsLanguage` instead of `availableLanguage`.
+  - The settings form hides fields that do not apply to the selected type.
+  - llms.txt lists the facts under "About us" and skips rooms, packages and
+    hotel areas.
+- `SchemaGraphBuilder::isLodgingBusiness()` and `::isLodgingType()`.
+
 ## 1.3.0
 
 - New submodule "Schema.org llms.txt" (`schema_org_llms`): generates

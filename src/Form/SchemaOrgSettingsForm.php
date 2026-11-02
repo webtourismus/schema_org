@@ -13,6 +13,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\ConfigTarget;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Locale\CountryManagerInterface;
+use Drupal\schema_org\SchemaGraphBuilder;
 
 /**
  * Configures the hotel profile of the schema.org graph.
@@ -82,15 +83,26 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
     $form['general']['business_type'] = [
       '#type' => 'select',
       '#title' => $this->t('Type of business'),
+      '#description' => $this->t('Rooms, packages, hotel areas and the classification are only output for accommodation.'),
       '#options' => [
-        'Hotel' => $this->t('Hotel'),
-        'Resort' => $this->t('Resort'),
-        'BedAndBreakfast' => $this->t('Bed and breakfast / guesthouse'),
-        'Hostel' => $this->t('Hostel'),
-        'Motel' => $this->t('Motel'),
-        'Campground' => $this->t('Campground'),
-        'VacationRental' => $this->t('Vacation rental / apartments'),
-        'LodgingBusiness' => $this->t('Other lodging business'),
+        (string) $this->t('Accommodation') => [
+          'Hotel' => $this->t('Hotel'),
+          'Resort' => $this->t('Resort'),
+          'BedAndBreakfast' => $this->t('Bed and breakfast / guesthouse'),
+          'Hostel' => $this->t('Hostel'),
+          'Motel' => $this->t('Motel'),
+          'Campground' => $this->t('Campground'),
+          'VacationRental' => $this->t('Vacation rental / apartments'),
+          'LodgingBusiness' => $this->t('Other lodging business'),
+        ],
+        (string) $this->t('Other business') => [
+          'Restaurant' => $this->t('Restaurant'),
+          'LocalBusiness' => $this->t('Other local business'),
+        ],
+        (string) $this->t('Organization') => [
+          'NGO' => $this->t('Non-profit organization / charity'),
+          'Organization' => $this->t('Other organization / association'),
+        ],
       ],
       '#config_target' => $target . 'business_type',
     ];
@@ -204,6 +216,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       '#type' => 'details',
       '#title' => $this->t('Classification and stay'),
       '#open' => TRUE,
+      '#states' => static::businessTypeStates('invisible', [...SchemaGraphBuilder::ORGANIZATION_TYPES, ...SchemaGraphBuilder::LOCAL_BUSINESS_TYPES]),
     ];
     $form['stay']['star_rating'] = [
       '#type' => 'select',
@@ -252,13 +265,20 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Default for all rooms. Can be overridden per room.'),
       '#config_target' => $target . 'pets_allowed',
     ];
-    $form['stay']['price_range'] = [
+
+    $form['business'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Prices, languages and amenities'),
+      '#open' => TRUE,
+    ];
+    $form['business']['price_range'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Price range'),
       '#description' => $this->t('For example "€€€" or "€120–350 per night". Translatable in the "Translate schema.org" tab.'),
       '#config_target' => $target . 'price_range',
+      '#states' => static::businessTypeStates('invisible', SchemaGraphBuilder::ORGANIZATION_TYPES),
     ];
-    $form['stay']['currency'] = [
+    $form['business']['currency'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Currency'),
       '#description' => $this->t('ISO 4217 code of the prices of rooms and packages.'),
@@ -267,13 +287,14 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
       '#config_target' => $target . 'currency',
     ];
-    $form['stay']['payment_accepted'] = [
+    $form['business']['payment_accepted'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Payment accepted'),
       '#description' => $this->t('For example "Cash, Credit Card, Debit Card, Bank transfer". Translatable in the "Translate schema.org" tab.'),
       '#config_target' => $target . 'payment_accepted',
+      '#states' => static::businessTypeStates('invisible', SchemaGraphBuilder::ORGANIZATION_TYPES),
     ];
-    $form['stay']['available_languages'] = [
+    $form['business']['available_languages'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Languages spoken'),
       '#description' => $this->t('Language codes spoken by the staff, one per line, for example "de", "en", "it".'),
@@ -285,7 +306,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
         [static::class, 'linesToConfig'],
       ),
     ];
-    $form['stay']['amenities'] = [
+    $form['business']['amenities'] = [
       '#type' => 'entity_autocomplete',
       '#title' => $this->t('Amenities'),
       '#description' => $this->t('Amenities of the whole hotel (e.g. spa, restaurant, parking), separated by commas. Room amenities are taken from each room.'),
@@ -294,6 +315,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       '#tags' => TRUE,
       '#maxlength' => 4096,
       '#default_value' => $this->loadByUuids('taxonomy_term', $config->get('amenity_uuids') ?? []),
+      '#states' => static::businessTypeStates('invisible', SchemaGraphBuilder::ORGANIZATION_TYPES),
     ];
 
     $form['links'] = [
@@ -333,6 +355,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Content types describing rooms'),
       '#description' => $this->t('Output as HotelRoom with an Offer.'),
       '#options' => $nodeTypes,
+      '#states' => static::businessTypeStates('invisible', [...SchemaGraphBuilder::ORGANIZATION_TYPES, ...SchemaGraphBuilder::LOCAL_BUSINESS_TYPES]),
       '#config_target' => new ConfigTarget(
         static::CONFIG_NAME,
         'room_bundles',
@@ -344,6 +367,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Content types describing offers'),
       '#description' => $this->t('Output as Offer, for example packages.'),
       '#options' => $nodeTypes,
+      '#states' => static::businessTypeStates('invisible', [...SchemaGraphBuilder::ORGANIZATION_TYPES, ...SchemaGraphBuilder::LOCAL_BUSINESS_TYPES]),
       '#config_target' => new ConfigTarget(
         static::CONFIG_NAME,
         'offer_bundles',
@@ -377,6 +401,22 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       ->set('image_uuids', $this->idsToUuids('media', $form_state->getValue('images')))
       ->set('amenity_uuids', $this->idsToUuids('taxonomy_term', $form_state->getValue('amenities')))
       ->save();
+  }
+
+  /**
+   * Builds #states depending on the selected business type.
+   *
+   * @param string $state
+   *   The state, e.g. "invisible".
+   * @param string[] $types
+   *   The business types that set the state, any of them.
+   *
+   * @return array<string, mixed>
+   *   The #states value.
+   */
+  protected static function businessTypeStates(string $state, array $types): array {
+    $conditions = array_map(static fn (string $type): array => ['value' => $type], $types);
+    return [$state => [':input[name="business_type"]' => $conditions]];
   }
 
   /**
