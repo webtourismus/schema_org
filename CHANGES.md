@@ -1,5 +1,16 @@
 # Changes
 
+## 1.5.0
+
+- Hotel-wide amenities are plain text, one per line, translatable in the
+  "Translate schema.org" tab, instead of terms of the room amenity
+  vocabulary. Hotel amenities like spa or sauna no longer show up as
+  checkboxes on rooms. Room amenities still come from the room's terms.
+- Post update `schema_org_post_update_amenities_as_text` converts the
+  configured terms (`amenity_uuids`) to text (`amenities`), translated
+  labels go into the language overrides. The terms themselves are kept;
+  delete hotel-only terms from the amenity vocabulary manually.
+
 ## 1.4.0
 
 - Business types for websites other than accommodation: `Restaurant`,

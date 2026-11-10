@@ -369,10 +369,7 @@ class SchemaGraphBuilder {
       // other businesses "knowsLanguage".
       'availableLanguage' => $isLodging ? $languages : NULL,
       'knowsLanguage' => $isLodging ? NULL : $languages,
-      'amenityFeature' => $isPlace ? $this->buildAmenityFeatures(
-        $this->loadByUuids('taxonomy_term', $config->get('amenity_uuids') ?? []),
-        $cacheability,
-      ) : NULL,
+      'amenityFeature' => $isPlace ? $this->buildAmenityFeaturesFromText((string) $config->get('amenities')) : NULL,
       'sameAs' => $config->get('same_as'),
       'containsPlace' => $isLodging ? $this->getHotelPlaces($cacheability) : NULL,
     ];
@@ -703,6 +700,30 @@ class SchemaGraphBuilder {
         'name' => $term->label(),
         'value' => TRUE,
       ];
+    }
+    return $features;
+  }
+
+  /**
+   * Builds amenity features from text, one amenity per line.
+   *
+   * @param string $text
+   *   The amenities, one per line.
+   *
+   * @return list<array<string, mixed>>
+   *   A list of LocationFeatureSpecification nodes.
+   */
+  protected function buildAmenityFeaturesFromText(string $text): array {
+    $features = [];
+    foreach (preg_split('/\R/', $text) ?: [] as $line) {
+      $name = trim($line);
+      if ($name !== '') {
+        $features[] = [
+          '@type' => 'LocationFeatureSpecification',
+          'name' => $name,
+          'value' => TRUE,
+        ];
+      }
     }
     return $features;
   }

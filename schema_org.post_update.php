@@ -43,6 +43,57 @@ function schema_org_post_update_page_type(): TranslatableMarkup {
 }
 
 /**
+ * Converts the hotel amenities from taxonomy term references to text.
+ *
+ * Hotel-wide amenities (spa, sauna, …) no longer need terms in the room
+ * amenity vocabulary. Term labels become one line each, translated labels go
+ * into the language overrides of the settings.
+ */
+function schema_org_post_update_amenities_as_text(): TranslatableMarkup {
+  $config = \Drupal::configFactory()->getEditable('schema_org.settings');
+  $uuids = $config->get('amenity_uuids') ?? [];
+  $terms = [];
+  foreach ($uuids as $uuid) {
+    $loaded = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties(['uuid' => $uuid]);
+    if ($term = reset($loaded)) {
+      $terms[] = $term;
+    }
+  }
+
+  $languageManager = \Drupal::languageManager();
+  $defaultLangcode = $languageManager->getDefaultLanguage()->getId();
+  $labels = static function (string $langcode) use ($terms): array {
+    return array_map(
+      static fn($term) => $term->hasTranslation($langcode) ? $term->getTranslation($langcode)->label() : $term->label(),
+      $terms,
+    );
+  };
+
+  $config
+    ->clear('amenity_uuids')
+    ->set('amenities', implode("\n", $labels($defaultLangcode)))
+    ->save();
+
+  if ($terms && $languageManager instanceof ConfigurableLanguageManagerInterface) {
+    foreach ($languageManager->getLanguages() as $langcode => $language) {
+      if ($langcode === $defaultLangcode) {
+        continue;
+      }
+      $translated = $labels($langcode);
+      if ($translated === $labels($defaultLangcode)) {
+        continue;
+      }
+      $override = $languageManager->getLanguageConfigOverride($langcode, 'schema_org.settings');
+      $override->set('amenities', implode("\n", $translated))->save();
+    }
+  }
+
+  return new TranslatableMarkup('Converted @count hotel amenities from taxonomy terms to text.', [
+    '@count' => count($terms),
+  ]);
+}
+
+/**
  * Creates schema fields from the module's shipped configuration.
  *
  * Field storages are created from config/install (with their translations),

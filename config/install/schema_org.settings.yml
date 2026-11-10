@@ -27,7 +27,7 @@ price_range: ''
 currency: EUR
 payment_accepted: ''
 available_languages: {  }
-amenity_uuids: {  }
+amenities: ''
 same_as: {  }
 booking_url: ''
 extra_properties: ''

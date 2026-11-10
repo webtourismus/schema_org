@@ -156,12 +156,9 @@ schema_org.settings:
           Regex:
             pattern: '/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/'
             message: 'Use language codes like "de", "en" or "it".'
-    amenity_uuids:
-      type: sequence
-      label: 'Amenities (taxonomy term UUIDs)'
-      sequence:
-        type: uuid
-        label: 'Term UUID'
+    amenities:
+      type: text
+      label: 'Amenities of the whole hotel, one per line'
     same_as:
       type: sequence
       label: 'Profiles on other websites'

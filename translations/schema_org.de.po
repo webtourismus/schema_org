@@ -243,8 +243,11 @@ msgstr "Sprachcodes der vom Personal gesprochenen Sprachen, eine pro Zeile, zum 
 msgid "Amenities"
 msgstr "Ausstattung"
 
-msgid "Amenities of the whole hotel (e.g. spa, restaurant, parking), separated by commas. Room amenities are taken from each room."
-msgstr "Ausstattung des gesamten Hotels (z. B. Spa, Restaurant, Parkplatz), durch Kommas getrennt. Die Zimmerausstattung wird aus den einzelnen Zimmern übernommen."
+msgid "Amenities of the whole hotel (e.g. spa, sauna, restaurant, parking), one per line. Translatable in the \"Translate schema.org\" tab. Room amenities are taken from each room."
+msgstr "Ausstattung des gesamten Hotels (z. B. Spa, Sauna, Restaurant, Parkplatz), eine pro Zeile. Übersetzbar im Reiter „schema.org übersetzen“. Die Zimmerausstattung wird aus den einzelnen Zimmern übernommen."
+
+msgid "Converted @count hotel amenities from taxonomy terms to text."
+msgstr "@count Hotel-Ausstattungsmerkmale von Taxonomie-Begriffen in Text umgewandelt."
 
 msgid "Links"
 msgstr "Links"

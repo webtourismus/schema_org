@@ -307,14 +307,11 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       ),
     ];
     $form['business']['amenities'] = [
-      '#type' => 'entity_autocomplete',
+      '#type' => 'textarea',
       '#title' => $this->t('Amenities'),
-      '#description' => $this->t('Amenities of the whole hotel (e.g. spa, restaurant, parking), separated by commas. Room amenities are taken from each room.'),
-      '#target_type' => 'taxonomy_term',
-      '#selection_settings' => $this->getAmenitySelectionSettings(),
-      '#tags' => TRUE,
-      '#maxlength' => 4096,
-      '#default_value' => $this->loadByUuids('taxonomy_term', $config->get('amenity_uuids') ?? []),
+      '#description' => $this->t('Amenities of the whole hotel (e.g. spa, sauna, restaurant, parking), one per line. Translatable in the "Translate schema.org" tab. Room amenities are taken from each room.'),
+      '#rows' => 5,
+      '#config_target' => $target . 'amenities',
       '#states' => static::businessTypeStates('invisible', SchemaGraphBuilder::ORGANIZATION_TYPES),
     ];
 
@@ -399,7 +396,6 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
     // deployed between environments.
     $this->config(static::CONFIG_NAME)
       ->set('image_uuids', $this->idsToUuids('media', $form_state->getValue('images')))
-      ->set('amenity_uuids', $this->idsToUuids('taxonomy_term', $form_state->getValue('amenities')))
       ->save();
   }
 
@@ -522,17 +518,6 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
       }
     }
     return $bundles ? ['target_bundles' => $bundles] : [];
-  }
-
-  /**
-   * Restricts the term autocomplete to the "amenity" vocabulary, if present.
-   *
-   * @return array<string, mixed>
-   *   Selection settings.
-   */
-  protected function getAmenitySelectionSettings(): array {
-    $vocabulary = $this->entityTypeManager->getStorage('taxonomy_vocabulary')->load('amenity');
-    return $vocabulary ? ['target_bundles' => ['amenity' => 'amenity']] : [];
   }
 
 }
