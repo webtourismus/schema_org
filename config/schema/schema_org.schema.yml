@@ -170,7 +170,8 @@ schema_org.settings:
             pattern: '/^https?:\/\/\S+$/'
             message: 'Each line must be an absolute URL starting with https://.'
     booking_url:
-      type: string
+      # Translatable: the booking page has a URL per language.
+      type: label
       label: 'Booking URL'
       constraints:
         Regex:

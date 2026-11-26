@@ -245,6 +245,24 @@ class SchemaGraphBuilder {
   }
 
   /**
+   * Gets the "@id" of the hotel or organization of the website.
+   *
+   * For markup outside the graph that refers to the business, e.g.
+   * "itemReviewed" of reviews rendered by the theme.
+   *
+   * @param \Drupal\Core\Cache\CacheableMetadata $cacheability
+   *   Collects the cacheability of the result.
+   *
+   * @return string
+   *   The "@id", e.g. "https://www.example.com/#hotel".
+   */
+  public function getBusinessReferenceId(CacheableMetadata $cacheability): string {
+    $config = $this->configFactory->get('schema_org.settings');
+    $cacheability->addCacheableDependency($config)->addCacheContexts(['url.site']);
+    return $this->getBusinessId($config);
+  }
+
+  /**
    * Checks whether the configured business is a lodging business.
    *
    * Rooms, packages and hotel areas are only output for lodging businesses.

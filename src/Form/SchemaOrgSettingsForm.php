@@ -335,7 +335,7 @@ class SchemaOrgSettingsForm extends ConfigFormBase {
     $form['links']['booking_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Booking URL'),
-      '#description' => $this->t('Entry page of the booking engine, published as reservation action of the hotel. Rooms and packages use their own booking deeplinks.'),
+      '#description' => $this->t('Entry page of the booking engine, published as reservation action of the hotel. Rooms and packages use their own booking deeplinks. Translatable in the "Translate schema.org" tab, so that every language links to its own booking page.'),
       '#config_target' => $target . 'booking_url',
     ];
 

@@ -261,8 +261,8 @@ msgstr "Eine URL pro Zeile: Google-Unternehmensprofil, Facebook, Instagram, Trip
 msgid "Booking URL"
 msgstr "Buchungs-URL"
 
-msgid "Entry page of the booking engine, published as reservation action of the hotel. Rooms and packages use their own booking deeplinks."
-msgstr "Einstiegsseite der Buchungsmaschine, wird als Reservierungs-Aktion des Hotels veröffentlicht. Zimmer und Angebote verwenden ihre eigenen Buchungs-Deeplinks."
+msgid "Entry page of the booking engine, published as reservation action of the hotel. Rooms and packages use their own booking deeplinks. Translatable in the \"Translate schema.org\" tab, so that every language links to its own booking page."
+msgstr "Einstiegsseite der Buchungsmaschine, wird als Reservierungs-Aktion des Hotels veröffentlicht. Zimmer und Angebote verwenden ihre eigenen Buchungs-Deeplinks. Übersetzbar im Reiter „schema.org übersetzen“, damit jede Sprache auf ihre eigene Buchungsseite verlinkt."
 
 msgid "Settings"
 msgstr "Einstellungen"

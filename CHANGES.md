@@ -1,5 +1,14 @@
 # Changes
 
+## 1.6.0
+
+- The booking URL is translatable in the "Translate schema.org" tab. Before,
+  the reservation action and the "Booking" link in llms.txt pointed to the
+  booking page of the default language in all languages.
+- New method `SchemaGraphBuilder::getBusinessReferenceId()` returns the "@id"
+  of the hotel or organization for markup outside the graph, e.g.
+  "itemReviewed" of reviews rendered by the theme.
+
 ## 1.5.0
 
 - Hotel-wide amenities are plain text, one per line, translatable in the
